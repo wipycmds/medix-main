@@ -1,0 +1,14 @@
+{
+	"import all need": {
+		"prefix": "impp",
+		"body": [
+		  "import 'package:flutter/material.dart';",
+		  "import 'package:medix/Utils/utils.dart';",
+		  "import 'package:medix/Presentation/Widgets/widgets.dart';",
+		  "import 'package:medix/Extensions/extension.dart';",
+		  "import 'package:flutter_screenutil/flutter_screenutil.dart';"
+		],
+		"description": "import all need"
+	  },
+
+}

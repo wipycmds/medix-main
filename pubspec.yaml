@@ -1,0 +1,70 @@
+name: medix
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.15.0-268.18.beta <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  animated_theme_switcher: "^2.0.5"
+  http: ^1.3.0
+  get_it: ^8.0.3
+  pin_code_fields: ^8.0.1
+  percent_indicator: ^4.2.5
+  stacked: ^3.4.4
+  table_calendar: ^3.0.3
+  intl: ^0.20.2
+  staggered_grid_view_flutter: ^0.0.4
+  flutter_screenutil: ^5.9.3
+  flutter_svg: ^2.1.0
+  shared_preferences: ^2.5.3
+  # card_scanner: ^1.0.1-prerelease  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0  
+  flutter_launcher_icons: ^0.14.3
+  flutter_native_splash: ^2.4.6
+  build_runner: ^2.1.7
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: assets/Logo/medixLogo.png
+  remove_alpha_ios: true
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets\Logo\medixLogo.png
+
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/Fonts/
+    - assets/Icons/
+    - assets/Illustration/
+    - assets/Images/Temp/
+    - assets/Logo/
+
+  fonts:
+    - family: TT Commons
+      fonts:
+        - asset: assets\Fonts\TTCommons-Thin.otf
+        - asset: assets\Fonts\TTCommons-Regular.otf
+        - asset: assets\Fonts\TTCommons-Medium.otf
+        - asset: assets\Fonts\TTCommons-Light.otf
+        - asset: assets\Fonts\TTCommons-ExtraLight.otf
+        - asset: assets\Fonts\TTCommons-ExtraBold.otf
+        - asset: assets\Fonts\TTCommons-DemiBold.otf
+        - asset: assets\Fonts\TTCommons-Bold.otf
+        - asset: assets\Fonts\TTCommons-Black.otf
