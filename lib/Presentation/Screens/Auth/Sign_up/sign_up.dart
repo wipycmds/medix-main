@@ -329,7 +329,7 @@ class _SignUpState extends State<SignUp> {
 
     if (response.statusCode == 201) {
  
- debugPrint(response.body);
+ 
 
       // // Navigate to BottomNav screen
       // NavigationUtil.to(context, const SignupOtpVerification(type: selectedType,));
