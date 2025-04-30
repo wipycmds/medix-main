@@ -11,11 +11,11 @@ class SignupOtpVerification extends StatefulWidget {
   final String type; // 'email' or 'mobile'
   final String value;
 
-  const SignupOtpVerification({
+  const SignupOtpVerification({Key? key, 
     // super.key,
     required this.type,
     required this.value,
-  });
+  }) : super(key: key);
 
   @override
   State<SignupOtpVerification> createState() => _SignupOtpVerificationState();

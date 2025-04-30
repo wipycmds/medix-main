@@ -288,7 +288,7 @@ class _SignUpState extends State<SignUp> {
                               selectedMethod == email ? 'email' : 'mobile';
 
                           var data = {
-                            'type': selectedType!,
+                            'type': selectedType,
                             'contact_value': selectedMethod!
                           };
 

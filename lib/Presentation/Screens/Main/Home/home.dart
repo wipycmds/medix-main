@@ -1,9 +1,7 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:medix/Data/Model/Home/doctor.dart';
 import 'package:medix/Data/Model/Home/pharmacy.dart';
-import 'package:medix/Presentation/Screens/Clinic_flow/Doctor_profile/doctor_profile.dart';
 import 'package:medix/Presentation/Screens/Profile/Profile/profile_screen.dart';
 import 'package:medix/Utils/theme_switcher.dart';
 import '../../Profile/Drawer/drawer_controller.dart';
@@ -12,7 +10,6 @@ import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../Search/search_screen.dart';
 import 'Compo/pharmacy.dart';
-import 'Compo/popular_doctor.dart';
 import 'Compo/services.dart';
 import '../Shared/home_text_field.dart';
 

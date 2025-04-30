@@ -40,6 +40,7 @@ class TopAppBar extends StatelessWidget {
     return MyStickyHeader(
       pinned: true,
       elevation: 4,
+      height: data.padding.top + kToolbarHeight + 12.h,
       child: Column(
         children: [
           SizedBox(
@@ -112,7 +113,6 @@ class TopAppBar extends StatelessWidget {
           ),
         ],
       ),
-      height: data.padding.top + kToolbarHeight + 12.h,
     );
   }
 }
