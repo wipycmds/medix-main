@@ -13,7 +13,7 @@ class AppLogo extends StatelessWidget {
       height: 71.14.h,
       width: 83.w,
       child: Image.asset(
-        isLight ? 'assets/Logo/textLogo2.png' : 'assets/Logo/textLogo.png',
+        isLight ? 'assets/Logo/luvmedLogos.png' : 'assets/Logo/luvmedLogos.png',
         // color:  null : ColorUtil.primaryColor,
       ),
     );

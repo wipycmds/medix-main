@@ -1,7 +1,12 @@
-import 'package:flutter/material.dart';
-import 'dart:async';
+import 'dart:math';
 
-import 'package:medix/Presentation/Screens/Auth/New_password/add_new_password.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:medix/Data/Core/api_client.dart';
+import 'package:medix/Presentation/Screens/Auth/Sign_up/sign_up.dart';
+import 'package:medix/Presentation/Screens/Main/Home/Compo/bottomnav.dart';
+import 'package:medix/Presentation/Screens/Pre_log/setup_profil.dart';
+import 'dart:async';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -129,9 +134,12 @@ class _SignupOtpVerificationState extends State<SignupOtpVerification> {
               Button(
                 tittle: 'Verify',
                 onTap: () {
-                  print('object');
-                  // TODO: Add OTP verification logic here
-                  // NavigationUtil.to(context, const AddNewPassWord());
+                  var data = {
+                    'contact_value': widget.value,
+                    'security_code': _otpController.text,
+                  };
+
+                  verifyCode(data, context);
                 },
               ),
             ],
@@ -140,4 +148,44 @@ class _SignupOtpVerificationState extends State<SignupOtpVerification> {
       ),
     );
   }
+  
+  Future<void> verifyCode(Map<String, String> data, BuildContext context) async {
+  final apiClient = ApiClient(http.Client());
+
+ 
+  try {
+    final response = await apiClient.post('auth/patient/verify-code', params: data);
+  
+  
+      if (response.statusCode == 201) {  
+      
+       NavigationUtil.to(context, const BottomNav());
+
+      } else if (response.statusCode == 400) {
+         ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Invalid verification code.')),
+        );
+      }else if (response.statusCode == 410) {
+         ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Verification code has expired.')),
+        );
+      }
+      else if (response.statusCode == 404) {
+         NavigationUtil.to(context, const SignUp());
+      }
+      
+      else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Login failed. Please check your credentials.')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('An error occurred. Please try again later.')),
+      );
+    } finally {
+      apiClient.client.close();
+    }
+  } 
 }
+

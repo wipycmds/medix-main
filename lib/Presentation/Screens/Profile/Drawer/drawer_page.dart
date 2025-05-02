@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:medix/Presentation/Screens/Auth/Login/get_started.dart';
 import 'package:medix/Presentation/Screens/Auth/Login/login.dart';
 import 'package:medix/Presentation/Screens/Clinic_flow/clinic_visit/clinic_vist.dart';
 import 'package:medix/Presentation/Screens/help%20center/helpcenter.dart';
@@ -156,7 +157,7 @@ class _DrawerPageState extends State<DrawerPage> {
                           selectDestination(5);
                           Navigator.of(context).pushAndRemoveUntil(
                               CupertinoPageRoute(
-                                  builder: (context) => const Login()),
+                                  builder: (context) => const GetStarted()),
                               (route) => false);
                         },
                         leading: Icons.logout,

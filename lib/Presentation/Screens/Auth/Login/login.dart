@@ -80,23 +80,22 @@ class Login extends StatelessWidget {
               Button(
                 tittle: 'Sign In',
                 onTap: () {
-                   NavigationUtil.to(context, const BottomNav());
-                  // String email = emailController.text.trim();
-                  // String password = passwordController.text;
+                  String email = emailController.text.trim();
+                  String password = passwordController.text;
 
-                  // var data = {
-                  //   'email': email,
-                  //   'password': password,
-                  // };
+                  var data = {
+                    'email': email,
+                    'password': password,
+                  };
 
-                  // if (email.isEmpty || password.isEmpty) {
-                  //   ScaffoldMessenger.of(context).showSnackBar(
-                  //     const SnackBar(content: Text('Email and password must not be empty')),
-                  //   );
-                  //   return;
-                  // }                 
+                  if (email.isEmpty || password.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Email and password must not be empty')),
+                    );
+                    return;
+                  }                 
 
-                  // loginUser(data, context);
+                  loginUser(data, context);
                 },
               ),
 
@@ -150,12 +149,10 @@ Future<void> loginUser(Map<String, String> data, BuildContext context) async {
   final apiClient = ApiClient(http.Client());
 
   try {
-    final response = await apiClient.post('auth/login', params: data);
-
+    final response = await apiClient.post('auth/patient/sign-in', params: data);
     if (response.statusCode == 200) {
       
       final responseData = jsonDecode(response.body);
-      debugPrint('Login successful: $responseData');
 
       final token = responseData['access_token'];
       final tokenType = responseData['token_type'];
