@@ -103,7 +103,7 @@ class _OnlinePharmacyState extends State<OnlinePharmacy> {
                     padding: const EdgeInsets.all(10),
                     child: GestureDetector(
                       onTap: () {
-                        NavigationUtil.to(context, const ProfileScreen());
+                        NavigationUtil.to(context,  ProfileScreen());
                       },
                       child: CircleAvatar(
                         radius: 16.r,

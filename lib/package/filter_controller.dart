@@ -27,6 +27,14 @@ import 'package:flutter/material.dart';
 class FilterController<T> extends ChangeNotifier {
   final List<T> _selectedFilters = List<T>.empty(growable: true);
 
+  String? selectedValue;
+
+
+
+  void setSelected(String value) {
+    selectedValue = value;
+  }
+
   ///make it accessible as group of filter
   List<T> get filters => _selectedFilters;
 

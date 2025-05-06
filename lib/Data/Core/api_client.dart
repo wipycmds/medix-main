@@ -25,19 +25,19 @@ class ApiClient extends BaseApiService {
         'Content-Type': 'application/json',
       },
     );
-
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      throw Exception(response.reasonPhrase);
-    }
+    return response;
+    // if (response.statusCode == 200) {
+    //   return json.decode(response.body);
+    // } else {
+    //   throw Exception(response.reasonPhrase);
+    // }
   }
 
    @override
   dynamic post(String path, {Map<dynamic, dynamic>? params}) async {
-    final f = getPath(path, null);
-    debugPrint(f.toString());
-    debugPrint(params.toString());
+    // final f = getPath(path, null);
+    // debugPrint(f.toString());
+    // debugPrint(params.toString());
 
     final response = await client.post(
       getPath(path, null),

@@ -20,7 +20,7 @@ class ClinicVisitCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 150.h,
+        height: 100.h,
         margin: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0),
         decoration: BoxDecoration(
             border: selected!
@@ -53,27 +53,27 @@ class ClinicVisitCard extends StatelessWidget {
                                   fontWeight: FWT.medium,
                                   fontColor:
                                       isLight ? Colors.black : Colors.white)
-                              .copyWith(fontSize: 22)),
+                              .copyWith(fontSize: 20)),
                       Text(
-                        "${info.hospitalCount} Hospital",
+                        "${info.hospitalCount} Doctors",
                         style: FontStyleUtilities.h6(
                             fontWeight: FWT.medium,
                             fontColor: isLight
                                 ? Colors.black.withOpacity(.50)
                                 : Colors.white),
                       ),
-                      SizedBox(height: 6.h),
-                      Text('\$${info.lowestCharge}-\$${info.highestCharge}',
-                          style: FontStyleUtilities.h6(
-                                  fontWeight: FWT.medium,
-                                  fontColor: ColorUtil.primaryColor)
-                              .copyWith(fontWeight: FontWeight.w600)),
-                      SizedBox(height: 17.h),
+                      // SizedBox(height: 6.h),
+                      // Text('\$${info.lowestCharge}-\$${info.highestCharge}',
+                      //     style: FontStyleUtilities.h6(
+                      //             fontWeight: FWT.medium,
+                      //             fontColor: ColorUtil.primaryColor)
+                      //         .copyWith(fontWeight: FontWeight.w600)),
+                      SizedBox(height: 8.h),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           const SvgIcon('assets/Icons/Time.svg'),
-                          SizedBox(width: 6.w),
+                          SizedBox(width: 1.w),
                           Text(
                             'Available time',
                             style: FontStyleUtilities.t2(
@@ -87,7 +87,7 @@ class ClinicVisitCard extends StatelessWidget {
                           Text(
                             "Dec ${info.time}",
                             style: FontStyleUtilities.t4(
-                                fontWeight: FWT.medium,
+                                fontWeight: FWT.regular,
                                 fontColor: isLight
                                     ? const Color(0xff454545).withOpacity(.80)
                                     : Colors.white.withOpacity(.70)),

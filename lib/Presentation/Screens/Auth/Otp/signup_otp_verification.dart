@@ -1,16 +1,17 @@
-import 'dart:math';
+
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:medix/Data/Core/api_client.dart';
 import 'package:medix/Presentation/Screens/Auth/Sign_up/sign_up.dart';
 import 'package:medix/Presentation/Screens/Main/Home/Compo/bottomnav.dart';
-import 'package:medix/Presentation/Screens/Pre_log/setup_profil.dart';
 import 'dart:async';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignupOtpVerification extends StatefulWidget {
   final String type; // 'email' or 'mobile'
@@ -152,12 +153,27 @@ class _SignupOtpVerificationState extends State<SignupOtpVerification> {
   Future<void> verifyCode(Map<String, String> data, BuildContext context) async {
   final apiClient = ApiClient(http.Client());
 
- 
   try {
-    final response = await apiClient.post('auth/patient/verify-code', params: data);
-  
+    final response = await apiClient.post('auth/patient/verify-code', params: data); 
+
+
   
       if (response.statusCode == 201) {  
+
+        final responseData = jsonDecode(response.body);
+        final token = responseData['access_token'];
+        final tokenType = responseData['token_type'];
+        final patientData = responseData['patient'];
+
+
+      if (token != null && tokenType != null) {
+        await saveAccessToken('$tokenType $token');
+      }
+
+      if (patientData != null) {
+        await savepatientData(patientData);
+      }
+
       
        NavigationUtil.to(context, const BottomNav());
 
@@ -171,7 +187,7 @@ class _SignupOtpVerificationState extends State<SignupOtpVerification> {
         );
       }
       else if (response.statusCode == 404) {
-         NavigationUtil.to(context, const SignUp());
+         NavigationUtil.to(context,  SignUp(mobile: data['contact_value'],));
       }
       
       else {
@@ -187,5 +203,22 @@ class _SignupOtpVerificationState extends State<SignupOtpVerification> {
       apiClient.client.close();
     }
   } 
+
+  Future<void> saveAccessToken(String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('access_token', token);
+  }
+
+  Future<void> savepatientData(Map<String, dynamic> patientData) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString('user_data', jsonEncode(patientData));
+
+    final loginId = patientData['id']?.toString();
+    if (loginId != null) {
+      await prefs.setString('login_id', loginId);
+    }
+  }
+
 }
 

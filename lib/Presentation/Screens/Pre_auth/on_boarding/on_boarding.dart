@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:medix/Presentation/Screens/Auth/Login/get_started.dart';
-import 'package:medix/Presentation/Screens/Auth/Login/login.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -3,6 +3,8 @@ import 'package:stacked/stacked.dart';
 
 class ConsulTationAppointmentViewModel extends BaseViewModel {
   final List<ClinicVisitCardModel> _clinics = [];
+
+  get tabController => null;
   void chooseClinic(ClinicVisitCardModel clinic) {
     _clinics.clear();
     _clinics.add(clinic);

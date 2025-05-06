@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:medix/Data/Core/api_client.dart';
-import 'package:medix/Presentation/Screens/Auth/Otp/otp_verification.dart';
 import 'package:medix/Presentation/Screens/Auth/Otp/signup_otp_verification.dart';
-import 'package:medix/Presentation/Widgets/check_box.dart';
+import 'package:medix/Presentation/Screens/Main/Home/Compo/bottomnav.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -69,26 +68,27 @@ class _GetStartedState extends State<GetStarted> {
               Button(
                 tittle: 'Continue',
                 onTap: () {
-                  String mobile = mobileController.text;
+                  NavigationUtil.to(context, const BottomNav());
+                  // String mobile = mobileController.text;
 
-                  var data = {
-                    'type': 'mobile_no',
-                    'contact_value': mobile,
-                  };
+                  // var data = {
+                  //   'type': 'mobile_no',
+                  //   'contact_value': mobile,
+                  // };
 
-                  if (mobile.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          'Mobile must not be empty',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    );
-                    return;
-                  }
+                  // if (mobile.isEmpty) {
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //     SnackBar(
+                  //       content: Text(
+                  //         'Mobile must not be empty',
+                  //         textAlign: TextAlign.center,
+                  //       ),
+                  //     ),
+                  //   );
+                  //   return;
+                  // }
 
-                  sendVerificationCode(data, context);
+                  // sendVerificationCode(data, context);
                 },
               ),
               SizedBox(height: 20.h),
@@ -113,14 +113,19 @@ class _GetStartedState extends State<GetStarted> {
             value: data['contact_value'].toString(),
           ),
         );
-      } else {
+      }else if (response.statusCode == 400) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Please check your credentials.')),
+          SnackBar(content: Text('Invalid mobile number.', textAlign: TextAlign.center)),
+        );
+      } 
+      else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Please check your credentials.', textAlign: TextAlign.center)),
         );
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred. Please try again later.')),
+        SnackBar(content: Text('An error occurred. Please try again later.', textAlign: TextAlign.center)),
       );
     } finally {
       apiClient.client.close();

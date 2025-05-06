@@ -15,10 +15,12 @@ import 'package:medix/Presentation/Widgets/widgets.dart';
 import '../../Flow_widgets/doctor_card.dart';
 
 class ConsultationSelectDoctor extends StatelessWidget {
-  const ConsultationSelectDoctor({Key? key}) : super(key: key);
+  final List<dynamic> provider;
+  const ConsultationSelectDoctor({Key? key, required this.provider}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print(provider);
     var isLight = Theme.of(context).brightness == Brightness.light;
     return ViewModelBuilder<ConsultationSelectDoctorViewModel>.reactive(
       viewModelBuilder: () => ConsultationSelectDoctorViewModel(),

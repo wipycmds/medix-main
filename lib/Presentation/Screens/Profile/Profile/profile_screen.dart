@@ -1,18 +1,85 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:medix/Data/Core/api_client.dart';
 import 'package:medix/Presentation/Constants/shadows.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../EditProfile/edit_profile.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:medix/Extensions/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../Shared/illness_tag.dart';
+class ProfileScreen extends StatefulWidget {
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+const ProfileScreen({Key? key}) : super(key: key);
+
+ @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+
+  String? loginId;
+
+Map<String, dynamic> profile = {};
+
+
+
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+     fetchPatienProfile();
+     loadLoginId(); 
+  }
+
+  Future<void> loadLoginId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      loginId = prefs.getString('login_id');
+    });
+  }
+
+  Future<void> fetchPatienProfile() async {
+    final apiClient = ApiClient(http.Client());
+
+    var patientId = {
+      'id': loginId
+    };
+    
+
+    try {
+      final response = await apiClient.post('auth/patient/profile/', params: patientId);
+
+      if (response.statusCode == 200) {
+        final patientProfile = jsonDecode(response.body) as Map<String, dynamic>;
+      print(patientProfile);
+
+      setState(() {
+        profile = patientProfile['patient'];
+      });
+          
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: ${response.body}')),
+        );
+      }
+    } catch (e) {
+      print("Error occurred: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('An error occurred. Please try again later.')),
+      );
+    } finally {
+      apiClient.client.close();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) { 
+    // print(profile);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -23,19 +90,27 @@ class ProfileScreen extends StatelessWidget {
             title: Text('My Profile'),
           ),
           const SliverSizedBox(
-            child: ProfileHeader(),
+            // child: ProfileHeader(),
           ),
+           SliverSizedBox(child: ProfileHeader(profile: profile)),
+
           SliverSizedBox(height: 24.h),
-          const SliverSizedBox(child: PersonalInfo()),
+          // const SliverSizedBox(child: PersonalInfo()),
+          SliverSizedBox(child: PersonalInfo(profile: profile)),
+
           SliverSizedBox(height: 24.h),
         ],
       ),
     );
   }
 }
+  
+
+
 
 class PersonalInfo extends StatelessWidget {
-  const PersonalInfo({Key? key}) : super(key: key);
+ final Map<String, dynamic> profile;
+  const PersonalInfo({Key? key, required this.profile}) : super(key: key);
 
   Widget _buildData(
       {required String param, required String value, required bool isLight}) {
@@ -94,19 +169,23 @@ class PersonalInfo extends StatelessWidget {
                   ],
                 ),
                 10.height(),
+                // _buildData(param: 'Phone Number', value: profile['mobile_no'] ?? '', isLight: isLight),
+                // _buildData(param: 'Gender', value: profile['gender'] ?? '', isLight: isLight),
+                // _buildData(param: 'Date Of Birth', value: profile['dob'] ?? '', isLight: isLight),
+
                 _buildData(
                     param: 'Phone Number',
-                    value: '+1 456 789 323',
+                    value: profile['mobile_number'] ?? '',
                     isLight: isLight),
                 14.height(),
                 _buildData(
-                    param: 'Email', value: 'youza@email.com', isLight: isLight),
+                    param: 'Email', value: profile['email'] ?? '', isLight: isLight),
                 14.height(),
-                _buildData(param: 'Gender', value: 'Male', isLight: isLight),
+                _buildData(param: 'Gender', value: profile['gender'] ?? '', isLight: isLight),
                 14.height(),
                 _buildData(
                     param: 'Date Of Birth',
-                    value: '23 August 1992',
+                    value: profile['dob'] ?? '',
                     isLight: isLight),
                 14.height(),
               ],
@@ -160,7 +239,7 @@ class PersonalInfo extends StatelessWidget {
                 14.height(),
                 _buildData(
                     param: 'Emergency Contact',
-                    value: '+1 453 2872 2873',
+                    value: profile['emergency_contact_number'] ?? '',
                     isLight: isLight),
               ],
             ),
@@ -200,9 +279,8 @@ class CustomOutlinedButton extends StatelessWidget {
 }
 
 class ProfileHeader extends StatelessWidget {
-  const ProfileHeader({
-    Key? key,
-  }) : super(key: key);
+  final Map<String, dynamic> profile;
+  const ProfileHeader({Key? key, required this.profile}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -226,7 +304,7 @@ class ProfileHeader extends StatelessWidget {
           children: [
             ///NAME
             Text(
-              'Pascal Mendel',
+              '${profile['first_name']} ${profile['middle_name']} ${profile['last_name']}',
               style: FontStyleUtilities.h3(
                   fontWeight: FWT.bold,
                   fontColor: isLight ? Colors.black : Colors.white),
@@ -257,40 +335,40 @@ class ProfileHeader extends StatelessWidget {
         10.height(),
 
         ///EDIT LOCATION
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              CupertinoIcons.location,
-              color: ColorUtil.primaryColor,
-            ),
-            6.width(),
-            Text(
-              'LONDON',
-              style: FontStyleUtilities.t1(
-                  fontWeight: FWT.bold,
-                  height: 1.5,
-                  fontColor: isLight ? Colors.black : Colors.white),
-            ),
-          ],
-        ),
-        20.height(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _buildProfileData(
-                isLight: isLight,
-                icon: CupertinoIcons.news,
-                count: '2,346',
-                param: 'Appointments'),
-            20.width(),
-            _buildProfileData(
-                isLight: isLight,
-                icon: CupertinoIcons.creditcard,
-                count: r'$250',
-                param: 'Total Spending'),
-          ],
-        )
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     const Icon(
+        //       CupertinoIcons.location,
+        //       color: ColorUtil.primaryColor,
+        //     ),
+        //     6.width(),
+        //     Text(
+        //       'LONDON',
+        //       style: FontStyleUtilities.t1(
+        //           fontWeight: FWT.bold,
+        //           height: 1.5,
+        //           fontColor: isLight ? Colors.black : Colors.white),
+        //     ),
+        //   ],
+        // ),
+        // 20.height(),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     _buildProfileData(
+        //         isLight: isLight,
+        //         icon: CupertinoIcons.news,
+        //         count: '2,346',
+        //         param: 'Appointments'),
+        //     20.width(),
+        //     _buildProfileData(
+        //         isLight: isLight,
+        //         icon: CupertinoIcons.creditcard,
+        //         count: r'$250',
+        //         param: 'Total Spending'),
+        //   ],
+        // )
       ],
     );
   }

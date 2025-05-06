@@ -38,35 +38,38 @@ class ConsultationBookAppointment extends StatelessWidget {
                       child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '24/7 Doctor Video\nConsultation',
-                                  style: FontStyleUtilities.h2(
-                                      height: 1.26,
-                                      fontWeight: FWT.medium,
-                                      fontColor: isLight
-                                          ? Colors.black
-                                          : Colors.white),
-                                ),
-                                Text(
-                                  'Find the service you are ',
-                                  style: FontStyleUtilities.h6(
-                                      fontWeight: FWT.medium,
-                                      fontColor: isLight
-                                          ? const Color(0xffB9B9B9)
-                                          : Colors.white),
-                                ),
-                              ],
-                            ),
-                            const Spacer(),
-                            Padding(
-                              padding: EdgeInsets.only(bottom: 15.h),
-                              child: IconWrapper(
-                                  onTap: () {},
-                                  icon: 'assets/Icons/Search.svg'),
-                            ),
+                           
+                           
+                            
+                            // Column(
+                            //   crossAxisAlignment: CrossAxisAlignment.start,
+                            //   children: [
+                            //     Text(
+                            //       '24/7 Doctor Video\nConsultation',
+                            //       style: FontStyleUtilities.h2(
+                            //           height: 1,
+                            //           fontWeight: FWT.medium,
+                            //           fontColor: isLight
+                            //               ? Colors.black
+                            //               : Colors.white),
+                            //     ),
+                            //     Text(
+                            //       'Find the service you are ',
+                            //       style: FontStyleUtilities.h6(
+                            //           fontWeight: FWT.medium,
+                            //           fontColor: isLight
+                            //               ? const Color(0xffB9B9B9)
+                            //               : Colors.white),
+                            //     ),
+                            //   ],
+                            // ),
+                            // const Spacer(),
+                            // Padding(
+                            //   padding: EdgeInsets.only(bottom: 15.h),
+                            //   child: IconWrapper(
+                            //       onTap: () {},
+                            //       icon: 'assets/Icons/Search.svg'),
+                            // ),
                           ]))),
               SliverSizedBox(height: 10.h),
               SliverList(
@@ -91,8 +94,8 @@ class ConsultationBookAppointment extends StatelessWidget {
                     isArrowButton: true,
                     tittle: 'Continue',
                     onTap: () {
-                      NavigationUtil.to(
-                          context, const ConsultationSelectDoctor());
+                      // NavigationUtil.to(
+                      //     context, const ConsultationSelectDoctor(provider: <dynamic>[],));
                     }),
               )),
         ],

@@ -1,12 +1,13 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:medix/Data/Core/api_client.dart';
-import 'package:medix/Presentation/Screens/Auth/Otp/signup_otp_verification.dart';
+import 'package:medix/Presentation/Screens/Profile/Profile/profile_screen.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 
 class SignUp extends StatefulWidget {
   final String? mobile;
@@ -86,32 +87,32 @@ class _SignUpState extends State<SignUp> {
               ),
             
               SizedBox(height: 5.h),
-              TextFormField(
-  controller: dobController,
-  readOnly: true,
-  decoration: InputDecoration(
-    hintText: 'Select Date of Birth',
-    suffixIcon: Icon(Icons.calendar_today, color: Colors.grey),
-    contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-  ),
-  onTap: () async {
-    FocusScope.of(context).unfocus(); // Dismiss keyboard
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime(2000),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-      initialDatePickerMode: DatePickerMode.year,
-    );
-    if (picked != null) {
-      setState(() {
-        selectedDate = picked;
-        dobController.text = '${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}';
-      });
-    }
-  },
-),
+              // TextFormField(
+              //   controller: dobController,
+              //   readOnly: true,
+              //   decoration: InputDecoration(
+              //     hintText: 'Select Date of Birth',
+              //     suffixIcon: Icon(Icons.calendar_today, color: Colors.grey),
+              //     contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              //     border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+              //   ),
+              //   onTap: () async {
+              //     FocusScope.of(context).unfocus(); // Dismiss keyboard
+              //     final DateTime? picked = await showDatePicker(
+              //       context: context,
+              //       initialDate: DateTime(2000),
+              //       firstDate: DateTime(1900),
+              //       lastDate: DateTime.now(),
+              //       initialDatePickerMode: DatePickerMode.year,
+              //     );
+              //     if (picked != null) {
+              //       setState(() {
+              //         selectedDate = picked;
+              //         dobController.text = '${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}';
+              //       });
+              //     }
+              //   },
+              // ),
 
 
               DropdownButtonFormField<String>(
@@ -214,7 +215,7 @@ class _SignUpState extends State<SignUp> {
                     String province = provinceController.text;
                     String gender = selectedGender!;
                     String mobile = widget.mobile!;                 
-                    String dob = dobController.text;
+                    // String dob = dobController.text;
                     String reason = selectedSignupReason!;
                     // String otherReason = signupOtherReasonController.text;
 
@@ -227,7 +228,7 @@ class _SignUpState extends State<SignUp> {
                       'province': province,
                       'gender': gender,
                       'mobile_no': mobile,
-                      'dob': dob,
+                      // 'dob': dob,
                       'signup_reason': reason,
                     };
 
@@ -321,16 +322,18 @@ Future<void> signupUser(Map<String, String> data, BuildContext context) async {
 
   try {
     final response = await apiClient.post('auth/patient/register', params: data);
-    print("Response status code: ${response.statusCode}");
-    print("Response body: ${response.body}");
 
-    // Check if response code is successful
-    if (response.statusCode == 200) {
-      // Handle successful response
+    if (response.statusCode == 201) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Sign-up successful!')),
       );
-      // Do something with the response (like navigate)
+        Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProfileScreen(),
+        ),
+      );
+
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error: ${response.body}')),
@@ -346,30 +349,8 @@ Future<void> signupUser(Map<String, String> data, BuildContext context) async {
   }
 }
 
+
   
-
-  Future<void> sendVerificationCode(Map<String, String> data, BuildContext context) async {
-    final apiClient = ApiClient(http.Client());
- 
-    try {
-      final response = await apiClient.post('auth/patient/send-verification-code', params: data);
-      
-      if (response.statusCode == 201) {
-        NavigationUtil.to(context, SignupOtpVerification(type: 'mobile', value: data['contact_value'].toString(),));
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login failed. Please check your credentials.')),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred. Please try again later.')),
-      );
-    } finally {
-      apiClient.client.close();
-    }
-
-  }
 }
 
 class PasswordField extends StatefulWidget {
