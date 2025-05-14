@@ -6,14 +6,11 @@ import 'package:medix/Utils/utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stacked/stacked.dart';
 //
-import 'package:medix/Data/Fake_data/Home/doctors.dart';
 import 'package:medix/Presentation/Screens/Clinic_flow/Select_doctor/doctor_view_model.dart';
-import 'package:medix/Data/Fake_data/Clinic_visit/clinic_visits.dart';
 //
 import '../../Main/Home/Compo/end_drawer.dart';
 import '../Shared/app_bar.dart' as bar;
 import 'package:medix/Presentation/Widgets/widgets.dart';
-import '../../Flow_widgets/doctor_card.dart';
 
 class SelectDoctor extends StatelessWidget {
   const SelectDoctor({Key? key}) : super(key: key);
@@ -72,16 +69,16 @@ class SelectDoctor extends StatelessWidget {
                                 padding: 9)
                           ]))),
                   SliverSizedBox(height: 10.h),
-                  SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                          (context, index) => DoctorCard(
-                                selected: model.checkIfSelected(doctors[index]),
-                                onTap: () {
-                                  model.chooseClinic(doctors[index]);
-                                },
-                                info: doctors[index],
-                              ),
-                          childCount: clinics.length)),
+                  // SliverList(
+                  //     delegate: SliverChildBuilderDelegate(
+                  //         (context, index) => DoctorCard(
+                  //               selected: model.checkIfSelected(doctors[index]),
+                  //               onTap: () {
+                  //                 model.chooseClinic(doctors[index]);
+                  //               },
+                  //               info: doctors[index],
+                  //             ),
+                  //         childCount: clinics.length)),
                   SliverSizedBox(height: 115.h)
                 ],
               ),

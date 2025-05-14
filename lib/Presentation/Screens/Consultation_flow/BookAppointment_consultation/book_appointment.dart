@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:medix/Data/Core/api_client.dart';
+import 'package:medix/Data/Model/Consultation/providerTag.dart';
 import 'package:medix/Extensions/white_space_extension.dart';
 import 'package:medix/Presentation/Constants/gradients.dart';
-import 'package:medix/Presentation/Screens/Consultation_flow/Confrim_consulatation/confirm_consultation.dart';
 import 'package:medix/Presentation/Screens/Consultation_flow/Consultation_doctors/select_doctor_consultation.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
@@ -27,6 +27,8 @@ class _BookAppointmentState extends State<BookAppointment>
 
   List<String> _specialties = [];
   List<String> _services = [];
+  int _selectedProviderId = 0;
+  
 
   bool _isLoading = true;
 
@@ -40,54 +42,65 @@ class _BookAppointmentState extends State<BookAppointment>
   }
 
   Future<void> _fetchData() async {
-    final apiClient = ApiClient(http.Client());
+  final apiClient = ApiClient(http.Client());
 
-    try {
-      final response = await apiClient.get('auth/apps/provider/preferences');
-      if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        final providers = responseData['providers'];
+  try {
+    final response = await apiClient.get('auth/apps/provider/preferences');
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      final providers = responseData['providers'];
 
-                  
-        final List<String> allSpecialtyNames = [];
-        final List<String> allServiceNames = [];
+      List<ProviderTag> allSpecialties = [];
+      List<ProviderTag> allServices = [];
 
-        for (var provider in providers) {
-          final providerSpecialties = provider['provider_specialties'] ?? [];
-          for (var specialtyEntry in providerSpecialties) {
-            final specialty = specialtyEntry['specialty'];
-            if (specialty != null && specialty['name'] != null) {
-              allSpecialtyNames.add(specialty['name']);
-            }
-          }
+      for (var provider in providers) {
+        final providerId = provider['id'];
 
-          final providerServices = provider['provider_services'] ?? [];
-          for (var serviceEntry in providerServices) {
-            final service = serviceEntry['service'];
-            if (service != null && service['name'] != null) {
-              allServiceNames.add(service['name']);
-            }
+        final providerSpecialties = provider['provider_specialties'] ?? [];
+        for (var specialtyEntry in providerSpecialties) {
+          final specialty = specialtyEntry['specialty'];
+          if (specialty != null && specialty['name'] != null) {
+            allSpecialties.add(ProviderTag(
+              name: specialty['name'],
+              providerId: providerId,
+              icon: Icons.medical_services,
+            ));
           }
         }
 
-        setState(() {
-          _specialties = allSpecialtyNames;
-          _services = allServiceNames;
-          _isLoading = false;
-        });
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to load data.')),
-        );
+        final providerServices = provider['provider_services'] ?? [];
+        for (var serviceEntry in providerServices) {
+          final service = serviceEntry['service'];
+          if (service != null && service['name'] != null) {
+            allServices.add(ProviderTag(
+              name: service['name'],
+              providerId: providerId,
+              icon: Icons.medical_services_outlined,
+            ));
+          }
+        }
       }
-    } catch (e) {
+
+      setState(() {
+        _specialties = allSpecialties.cast<String>();
+        _services = allServices.cast<String>();
+        _isLoading = false;
+      });
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('An error occurred.')),
+        const SnackBar(content: Text('Failed to load data.')),
       );
-    } finally {
-      apiClient.client.close();
     }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('An error occurred.')),
+    );
+  } finally {
+    apiClient.client.close();
   }
+}
+
+
 
   void _onTabChanged() {
     _selectionController.clearTheList(); // Optional: uncomment if you want to clear selection on tab change
@@ -144,8 +157,8 @@ class _BookAppointmentState extends State<BookAppointment>
                   child: TabBarView(
                     controller: _tabController,
                     children: [
-                      _buildList(_specialties),
-                      _buildList(_services),
+                      _buildList(_specialties.cast<ProviderTag>()),
+                      _buildList(_services.cast<ProviderTag>()),
                     ],
                   ),
                 ),
@@ -154,58 +167,11 @@ class _BookAppointmentState extends State<BookAppointment>
                   child: Button(
                     tittle: 'Continue',
                     onTap: () {
-                      final selectedItem = _selectionController.getSelectedRadio;
-print(selectedItem);
-                      // NavigationUtil.to(
-                      //     context,
-                      //     ConsultationSelectDoctor(provider: _providers),
-                      //   );
-                    // if (_selectionController.checkIfNotSelected) {
-                    //   ScaffoldMessenger.of(context).showSnackBar(
-                    //     SnackBar(
-                    //       content: Text(
-                    //         'Please select one option.',
-                    //         textAlign: TextAlign.center,
-                    //       ),
-                    //     ),
-                    //   );
-                    // } else {
-                    //   final selectedItem = _selectionController.getSelectedRadio;
-
-                    //   // Find matching provider
-                    //   final matchingProvider = providers.firstWhere(
-                    //     (provider) {
-                    //       final specialties = provider['provider_specialties'] ?? [];
-                    //       final services = provider['provider_services'] ?? [];
-
-                    //       final matchInSpecialties = specialties.any((entry) =>
-                    //           entry['specialty']?['name'] == selectedItem);
-
-                    //       final matchInServices = services.any((entry) =>
-                    //           entry['service']?['name'] == selectedItem);
-
-                    //       return matchInSpecialties || matchInServices;
-                    //     },
-                    //     orElse: () => null,
-                    //   );
-
-                    //   if (matchingProvider != null) {
-                    //     NavigationUtil.to(
-                    //       context,
-                    //       ConsultationSelectDoctor(provider: matchingProvider),
-                    //     );
-                    //   } else {
-                    //     ScaffoldMessenger.of(context).showSnackBar(
-                    //       SnackBar(
-                    //         content: Text(
-                    //           'Selected item does not match any provider.',
-                    //           textAlign: TextAlign.center,
-                    //         ),
-                    //       ),
-                    //     );
-                    //   }
-                    // }
-                  }
+                    NavigationUtil.to(
+                        context,
+                        ConsultationSelectDoctor(providerId: _selectedProviderId),
+                      );
+                                    }
 
                   ),
                 )
@@ -214,23 +180,32 @@ print(selectedItem);
     );
   }
 
-  Widget _buildList(List<String> list) {
+  Widget _buildList(List<ProviderTag> items) {
+    if (items.isEmpty) {
+      return const Center(child: Text('No data available'));
+    }
+
     return ListView.builder(
-      padding: EdgeInsets.symmetric(vertical: 16.h),
-      itemCount: list.length,
+      itemCount: items.length,
       itemBuilder: (context, index) {
-        final item = list[index];
-        return AnimatedBuilder(
-          animation: _selectionController,
-          builder: (context, child) => BasicInfoTile(
-            title: item,
-            isSelected: _selectionController.checkIfSelected(item),
-            onTap: () => _selectionController.addAsRadio(item),
-          ),
+        final item = items[index];
+        final isSelected = _selectedProviderId == item.providerId;
+
+        return ListTile(
+          leading: Icon(item.icon),
+          title: Text(item.name),
+          tileColor: isSelected ? Theme.of(context).colorScheme.primary.withOpacity(0.1) : null,
+          onTap: () {
+            // print('Selected ${item.providerId}');
+            setState(() {
+              _selectedProviderId = item.providerId;
+            });
+          },
         );
       },
     );
   }
+
 }
 
 class BasicInfoTile extends StatelessWidget {
@@ -280,3 +255,4 @@ class BasicInfoTile extends StatelessWidget {
     );
   }
 }
+

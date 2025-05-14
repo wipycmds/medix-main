@@ -1,29 +1,5 @@
 import 'package:flutter/material.dart';
 
-///for wide accessibility we have turned it to generic type [T]
-///
-///  class UserModel{
-///  final String name,userId;
-///  UserModel({
-///   required this.name,
-///   required this.userId
-///   });
-///  }
-///
-///**initialization
-///  late FilterController<UserModel> _filterController;
-///  initState(){
-///   _filterController = FilterController<UserModel>();
-///   super.initState();
-///  }
-///
-/// ** Use
-///  FilterWrapper(
-///   filterController: _filterController();
-///   filters: ["Hello","I Am ", "Flutter Developer"];
-///   ),
-///
-
 class FilterController<T> extends ChangeNotifier {
   final List<T> _selectedFilters = List<T>.empty(growable: true);
 

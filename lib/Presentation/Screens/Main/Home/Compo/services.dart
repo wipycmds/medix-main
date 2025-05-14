@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:medix/Presentation/Screens/Clinic_flow/clinic_visit/clinic_vist.dart';
-import 'package:medix/Presentation/Screens/Consultation_flow/BookAppointment_consultation/book_appointment.dart';
+import 'package:medix/Presentation/Screens/Consultation_flow/BookAppointment_consultation/book_appointment_consultation.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../Consultation_flow/BookAppointment_consultation/book_appointment_consultation.dart';
-import 'bottomnav.dart';
 
 class Services extends StatelessWidget {
   const Services({
@@ -70,10 +67,10 @@ class Services extends StatelessWidget {
                 // ),
                 GestureDetector(
                   onTap: () {
-                    // NavigationUtil.to(
-                    //     context, const ConsultationBookAppointment());
                     NavigationUtil.to(
-                        context, const BookAppointment());
+                        context, const ConsultationBookAppointment());
+                    // NavigationUtil.to(
+                    //     context, const BookAppointment());
                   },
                   child: const ServiceCard(
                       icon: 'assets/Icons/consultation.svg',
