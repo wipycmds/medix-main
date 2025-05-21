@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medix/Data/Model/Home/doctor.dart';
 import 'package:medix/Presentation/Screens/Consultation_flow/Consultation_appointment_data/consulation_appointment_data.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
@@ -7,12 +8,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../Flow_widgets/specialist_tag.dart';
 
 class ConsultationDoctorProfile extends StatelessWidget {
-  const ConsultationDoctorProfile({Key? key}) : super(key: key);
+  final DoctorModel doctor;
+
+  const ConsultationDoctorProfile({Key? key, required this.doctor}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var isLight = Theme.of(context).brightness == Brightness.light;
+    
     MediaQueryData data = MediaQuery.of(context);
+  
+
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -62,7 +68,7 @@ class ConsultationDoctorProfile extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Dr. Leslie Alexander',
+                              doctor.name,
                               style: FontStyleUtilities.h3(
                                   fontWeight: FWT.semiBold,
                                   fontColor:
@@ -72,7 +78,7 @@ class ConsultationDoctorProfile extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  'Neurology ',
+                                  doctor.degree,
                                   style: FontStyleUtilities.h5(
                                           fontWeight: FWT.medium,
                                           fontColor: isLight

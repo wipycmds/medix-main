@@ -19,6 +19,7 @@ class DoctorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var isLight = Theme.of(context).brightness == Brightness.light;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -33,19 +34,19 @@ class DoctorCard extends StatelessWidget {
             color: isLight ? Colors.white : ColorUtil.surfaceDark),
         child: Row(
           children: [
-            Padding(
-              padding: EdgeInsets.all(8.0.w),
-              child: SizedBox(
-                width: 120.w,
-                height: double.infinity,
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15.r),
-                    child: Image.asset(
-                      info.image,
-                      fit: BoxFit.cover,
-                    )),
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.all(8.0.w),
+            //   child: SizedBox(
+            //     width: 120.w,
+            //     height: double.infinity,
+            //     child: ClipRRect(
+            //         borderRadius: BorderRadius.circular(15.r),
+            //         child: Image.asset(
+            //           info.image,
+            //           fit: BoxFit.cover,
+            //         )),
+            //   ),
+            // ),
             Expanded(
               child: Padding(
                 padding: EdgeInsets.only(

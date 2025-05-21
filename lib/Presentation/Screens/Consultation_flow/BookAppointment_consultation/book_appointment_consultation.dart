@@ -2,14 +2,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
-import 'package:medix/Data/Core/api_client.dart';
-import 'package:medix/Presentation/Screens/Consultation_flow/BookAppointment_consultation/choose_service_card.dart';
-import 'package:medix/Utils/font_style.dart';
+import 'package:medix/Data/Core/api_client.dart'; // Your ApiClient import
+import 'package:medix/Data/Model/Clinic/clinic_visit_card.dart';
+
+import 'package:medix/Presentation/Screens/Consultation_flow/Consultation_doctors/select_doctor_consultation.dart';
+import 'package:medix/Utils/utils.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import '../Shared/app_bar.dart' as bar;
+import '../../Flow_widgets/clinic_card.dart';
+
 import 'package:medix/Presentation/Screens/Consultation_flow/BookAppointment_consultation/book_appointment_consultation_view_model.dart';
+import 'package:medix/Data/Fake_data/Clinic_visit/clinic_visits.dart';
 
 class ConsultationBookAppointment extends StatefulWidget {
   const ConsultationBookAppointment({Key? key}) : super(key: key);
@@ -18,106 +23,48 @@ class ConsultationBookAppointment extends StatefulWidget {
   State<ConsultationBookAppointment> createState() => _ConsultationBookAppointmentState();
 }
 
-class _ConsultationBookAppointmentState extends State<ConsultationBookAppointment> with TickerProviderStateMixin {
-  late TabController _tabController;
-  List<Map<String, dynamic>> specialties = [];
-  List<Map<String, dynamic>> services = [];
-
+class _ConsultationBookAppointmentState extends State<ConsultationBookAppointment> {
   List<Map<String, dynamic>> dataService = [];
+
+  int _servicesId = 0;
+
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
     _fetchData();
   }
 
-  // Future<void> _fetchData() async {
-  //   final apiClient = ApiClient(http.Client());
-  //   try {
-  //     final response = await apiClient.get('auth/apps/provider/preferences');
-  //     if (response.statusCode == 200) {
-  //       final responseData = jsonDecode(response.body);
-  //       final serviceData = responseData['data'];
-
-  //       print(serviceData);
-
-  //       // setState(() {
-  //       //   dataService = serviceData;
-  //       // });
-  //     }
-  //   } catch (e) {
-  //     print("Error fetching data: $e");
-  //   }
-  // }
   Future<void> _fetchData() async {
-  final apiClient = ApiClient(http.Client());
-  try {
-    final response = await apiClient.get('auth/apps/provider/preferences');
-    if (response.statusCode == 200) {
-      final responseData = jsonDecode(response.body);
-      
-      // Log the response to see the structure
-      print(responseData);
-      
-      // Extract specialties and services data from the response
-      final specialtiesData = responseData['specialties'];
-      final servicesData = responseData['services'];  // Assuming services are under the 'services' key
+    final apiClient = ApiClient(http.Client());
+    try {
+      final response = await apiClient.get('auth/apps/provider/preferences');
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
 
-      // Ensure specialtiesData is a List
-      if (specialtiesData is List) {
-        setState(() {
-          dataService = List<Map<String, dynamic>>.from(specialtiesData);
-        });
+        if (responseData is Map<String, dynamic>) {
+          final data = responseData['data'];
+          if (data is Map<String, dynamic>) {
+         
+            final specialties = data['specialties'];
+            final services = data['services'];
+            if (specialties is List) {
+              setState(() {
+                dataService = List<Map<String, dynamic>>.from(specialties);
+              });
+            } else {
+              print("Expected 'specialties' to be a List, got: ${specialties.runtimeType}");
+            }
+          } else {
+            print("Expected 'data' to be a Map, got: ${data.runtimeType}");
+          }
+        }
       } else {
-        print("specialties is not a list, it's of type: ${specialtiesData.runtimeType}");
+        print('Failed to fetch data: ${response.statusCode}');
       }
-
-      // Ensure servicesData is a List
-      if (servicesData is List) {
-        setState(() {
-          dataService = List<Map<String, dynamic>>.from(servicesData);
-        });
-      } else {
-        print("services is not a list, it's of type: ${servicesData.runtimeType}");
-      }
+    } catch (e) {
+      print("Error fetching data: $e");
     }
-  } catch (e) {
-    print("Error fetching data: $e");
   }
-}
-
-
-  List<Map<String, dynamic>> get currentTabData =>
-      _tabController.index == 0 ? specialties : services;
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  Widget buildTabContent() {
-  final data = dataService;
-
-  return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-    child: Column(
-      children: data.map<Widget>((item) {
-        return ChooseServicesCard(
-          serviceName: item['name'],  // Assuming 'name' is the service name
-          category: item['category'],  // Assuming 'category' is the service category
-          description: item['description'],  // Assuming 'description' is the service description
-          onSelect: () {
-            // Logic for when the service is selected
-            // For example, you can update a view model, navigate, or show a dialog
-            print("Service Selected: ${item['name']}");
-          },
-        );
-      }).toList(),
-    ),
-  );
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -132,38 +79,70 @@ class _ConsultationBookAppointmentState extends State<ConsultationBookAppointmen
               slivers: [
                 const bar.ConsultationAppBar(step: bar.ConsultationStep.service),
                 SliverToBoxAdapter(child: SizedBox(height: 24.h)),
-
                 SliverToBoxAdapter(
-                  child: DefaultTabController(
-                    length: 2,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.w),
-                          child: TabBar(
-                            controller: _tabController,
-                            indicatorColor: const Color(0xff23A8D9),
-                            indicatorWeight: 3,
-                            labelColor: const Color(0xff23A8D9),
-                            unselectedLabelColor: const Color(0xffB9B9B9),
-                            labelStyle: FontStyleUtilities.h6(fontWeight: FWT.medium),
-                            onTap: (_) => setState(() {}), // Refresh UI on tab tap
-                            tabs: const [
-                              Tab(text: 'Specialty'),
-                              Tab(text: 'Services'),
-                            ],
-                          ),
-                        ),
-                        // buildTabContent(),
-                      ],
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      // children: [
+                      //   Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       Text(
+                      //         '24/7 Doctor Video\nConsultation',
+                      //         style: FontStyleUtilities.h2(
+                      //           height: 1.26,
+                      //           fontWeight: FWT.medium,
+                      //           fontColor: isLight ? Colors.black : Colors.white,
+                      //         ),
+                      //       ),
+                      //       Text(
+                      //         'Find the service you are ',
+                      //         style: FontStyleUtilities.h6(
+                      //           fontWeight: FWT.medium,
+                      //           fontColor: isLight ? const Color(0xffB9B9B9) : Colors.white,
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      //   const Spacer(),
+                      //   Padding(
+                      //     padding: EdgeInsets.only(bottom: 15.h),
+                      //     child: IconWrapper(onTap: () {}, icon: 'assets/Icons/Search.svg'),
+                      //   ),
+                      // ],
                     ),
+                  ),
+                ),
+                SliverSizedBox(height: 10.h),
+
+                /// You can use the fetched dataService here or update your ViewModel accordingly.
+                /// For example, if you want to display them in a list:
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      final item = index < dataService.length ? dataService[index] : null;
+                      if (item == null) return const SizedBox.shrink();
+
+
+                    final clinicModel = ClinicVisitCardModel.fromMap(item);
+
+                      return ClinicVisitCard(                       
+                        selected: model.checkIfSelected(clinicModel),
+                            onTap: () {
+                              model.chooseClinic(clinicModel, index);
+                            },
+                        info: clinicModel,
+
+                      );
+                    },
+                    childCount: dataService.length,
                   ),
                 ),
 
                 SliverSizedBox(height: 115.h),
               ],
             ),
-
             Positioned(
               bottom: 0,
               width: 375.w,
@@ -173,7 +152,17 @@ class _ConsultationBookAppointmentState extends State<ConsultationBookAppointmen
                   isArrowButton: true,
                   tittle: 'Continue',
                   onTap: () {
-                    // NavigationUtil.to(context, ConsultationSelectDoctor(...));
+                    if (model.selectedServiceId != null) {
+                      NavigationUtil.to(
+                        context,
+                        ConsultationSelectDoctor(servicesId: model.selectedServiceId!),
+                      );
+                    } else {
+                      // Optional: show warning if no clinic selected
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Please select a Service first")),
+                      );
+                    }
                   },
                 ),
               ),

@@ -166,7 +166,7 @@ class _HomeState extends State<Home> {
         SliverSizedBox(height: 10.h),
         const Services(),
         SliverSizedBox(height: 29.h),
-        Pharmacy(onTap: (PharmacyModel value) {}),
+        // Pharmacy(onTap: (PharmacyModel value) {}),
         SliverSizedBox(height: 10.h),
         // PopularDoctor(onTap: (DoctorModel value) {
         //   NavigationUtil.to(context, const DoctorProfile());

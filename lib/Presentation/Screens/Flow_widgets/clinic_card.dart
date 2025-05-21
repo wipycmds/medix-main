@@ -30,17 +30,17 @@ class ClinicVisitCard extends StatelessWidget {
             color: isLight ? Colors.white : ColorUtil.surfaceDark),
         child: Row(
           children: [
-            SizedBox(
-              width: 129.w,
-              child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15.r),
-                      bottomLeft: Radius.circular(15.r)),
-                  child: Image.asset(
-                    info.image,
-                    fit: BoxFit.cover,
-                  )),
-            ),
+            // SizedBox(
+            //   width: 129.w,
+            //   child: ClipRRect(
+            //       borderRadius: BorderRadius.only(
+            //           topLeft: Radius.circular(15.r),
+            //           bottomLeft: Radius.circular(15.r)),
+            //       child: Image.asset(
+            //         info.image,
+            //         fit: BoxFit.cover,
+            //       )),
+            // ),
             Expanded(
               child: Padding(
                   padding: EdgeInsets.only(
@@ -54,14 +54,14 @@ class ClinicVisitCard extends StatelessWidget {
                                   fontColor:
                                       isLight ? Colors.black : Colors.white)
                               .copyWith(fontSize: 20)),
-                      Text(
-                        "${info.hospitalCount} Doctors",
-                        style: FontStyleUtilities.h6(
-                            fontWeight: FWT.medium,
-                            fontColor: isLight
-                                ? Colors.black.withOpacity(.50)
-                                : Colors.white),
-                      ),
+                      // Text(
+                      //   "${info.hospitalCount} Doctors",
+                      //   style: FontStyleUtilities.h6(
+                      //       fontWeight: FWT.medium,
+                      //       fontColor: isLight
+                      //           ? Colors.black.withOpacity(.50)
+                      //           : Colors.white),
+                      // ),
                       // SizedBox(height: 6.h),
                       // Text('\$${info.lowestCharge}-\$${info.highestCharge}',
                       //     style: FontStyleUtilities.h6(
@@ -84,14 +84,14 @@ class ClinicVisitCard extends StatelessWidget {
                                     : Colors.white),
                           ),
                           const Spacer(),
-                          Text(
-                            "Dec ${info.time}",
-                            style: FontStyleUtilities.t4(
-                                fontWeight: FWT.regular,
-                                fontColor: isLight
-                                    ? const Color(0xff454545).withOpacity(.80)
-                                    : Colors.white.withOpacity(.70)),
-                          ),
+                          // Text(
+                          //   "Dec ${info.time}",
+                          //   style: FontStyleUtilities.t4(
+                          //       fontWeight: FWT.regular,
+                          //       fontColor: isLight
+                          //           ? const Color(0xff454545).withOpacity(.80)
+                          //           : Colors.white.withOpacity(.70)),
+                          // ),
                         ],
                       )
                     ],

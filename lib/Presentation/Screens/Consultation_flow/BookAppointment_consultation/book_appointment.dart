@@ -167,10 +167,10 @@ class _BookAppointmentState extends State<BookAppointment>
                   child: Button(
                     tittle: 'Continue',
                     onTap: () {
-                    NavigationUtil.to(
-                        context,
-                        ConsultationSelectDoctor(providerId: _selectedProviderId),
-                      );
+                    // NavigationUtil.to(
+                    //     context,
+                    //     ConsultationSelectDoctor(providerId: _selectedProviderId),
+                    //   );
                                     }
 
                   ),

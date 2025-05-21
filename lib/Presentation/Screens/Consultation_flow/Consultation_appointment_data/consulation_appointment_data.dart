@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:medix/Presentation/Screens/Consultation_flow/Consultation_appointment.dart/consultation_appointment.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:medix/Extensions/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../Flow_widgets/select_gender.dart';
 import '../../Flow_widgets/select_blood_group.dart';
 
@@ -20,8 +23,23 @@ class _ConsultationAppointmentDataState
   late String data = '';
 
   @override
+  Map<String, dynamic>? userData = {};
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferences.getInstance().then((value) {
+      setState(() {
+        userData = value.getString('userData') != null
+            ? Map<String, dynamic>.from(
+                jsonDecode(value.getString('userData') as String))
+            : {};
+      });
+    });
+  }
+
   Widget build(BuildContext context) {
     var isLight = Theme.of(context).brightness == Brightness.light;
+    print(userData);
     return Scaffold(
       body: Stack(
         children: [
