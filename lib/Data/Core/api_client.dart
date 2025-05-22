@@ -43,9 +43,10 @@ class ApiClient extends BaseApiService {
       body: jsonEncode(params),
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
+        //  HttpHeaders.acceptHeader: 'application/json',
       },
     );
-
+    // print('status code ${response.statusCode}'); //debugPrint(response.statusCode);
     return response;
     
     // if (response.statusCode == 200) {
@@ -55,6 +56,17 @@ class ApiClient extends BaseApiService {
     //   throw Exception(response.reasonPhrase);
     // }
   }
+
+  // dynamic postReg(String path, {Map<dynamic, dynamic>? params}) async {
+  //   final response = await client.post(
+  //     getPath(path, null),
+  //     body: jsonEncode(params),
+  //     headers: {
+  //        HttpHeaders.acceptHeader: 'application/json',
+  //     },
+  //   );
+  //   return response;
+  // }
 
   @override
   dynamic deleteWithBody(String path, {Map<dynamic, dynamic>? params}) async {

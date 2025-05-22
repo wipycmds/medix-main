@@ -18,28 +18,44 @@ class ConsultationAppointmentData extends StatefulWidget {
       _ConsultationAppointmentDataState();
 }
 
-class _ConsultationAppointmentDataState
-    extends State<ConsultationAppointmentData> {
+class _ConsultationAppointmentDataState  extends State<ConsultationAppointmentData> {
   late String data = '';
 
-  @override
-  Map<String, dynamic>? userData = {};
+late TextEditingController _nameController;
+// late TextEditingController _dobController;
+
+  Map<String, dynamic>? userData;
   @override
   void initState() {
     super.initState();
-    SharedPreferences.getInstance().then((value) {
+    _nameController = TextEditingController();
+    //  _dobController = TextEditingController();
+    _loadUserData();
+  }
+  
+
+  
+
+  Future<void> _loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final raw    = prefs.getString('user_data'); // ← correct key
+
+    if (raw != null) {
+      final Map<String, dynamic> decoded = jsonDecode(raw);
+      //  _nameController.text = '${userData!["first_name"]} ${userData!["last_name"]}';
       setState(() {
-        userData = value.getString('userData') != null
-            ? Map<String, dynamic>.from(
-                jsonDecode(value.getString('userData') as String))
-            : {};
+        userData = decoded;
       });
-    });
+    }
   }
 
+  @override
   Widget build(BuildContext context) {
     var isLight = Theme.of(context).brightness == Brightness.light;
-    print(userData);
+  
+    if (userData == null) {
+    return const Center(child: CircularProgressIndicator());
+  }
     return Scaffold(
       body: Stack(
         children: [
@@ -61,7 +77,9 @@ class _ConsultationAppointmentDataState
                   AppointmentTextField(
                     icon: 'assets/Icons/user.svg',
                     hint: 'Enter your Name',
-                    tittle: 'Name',
+                    controller: TextEditingController(
+                        text: '${userData!["first_name"]} ${userData!["middle_name"]} ${userData!["last_name"]}'),
+                    tittle: 'Name',                   
                     onTap: () {},
                   ),
                   5.height(),
@@ -69,6 +87,7 @@ class _ConsultationAppointmentDataState
                     icon: 'assets/Icons/Calendar.svg',
                     hint: data != '' ? data : 'dd/mm/yyyy',
                     tittle: 'Date of Birth',
+                    controller: TextEditingController(text: userData!["dob"]),
                     enabled: false,
                     onTap: () async {
                       DateTime? pickDate = await showDatePicker(
@@ -111,6 +130,7 @@ class _ConsultationAppointmentDataState
                     icon: 'assets/Icons/call.svg',
                     hint: 'Enter your Number',
                     tittle: 'Mobile Number',
+                    controller: TextEditingController(text: userData!["mobile_number"]),
                     onTap: () {},
                   ),
                 ])),
@@ -195,11 +215,13 @@ class AppointmentTextField extends StatelessWidget {
       required this.onTap,
       required this.hint,
       this.enabled = true,
+      this.controller,
       required this.tittle})
       : super(key: key);
   final String icon, hint, tittle;
   final bool enabled;
   final VoidCallback onTap;
+  final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     var isLight = Theme.of(context).brightness == Brightness.light;
@@ -220,6 +242,7 @@ class AppointmentTextField extends StatelessWidget {
           child: MyTextField(
             hint: hint,
             enabled: enabled,
+            controller: controller,
             obscureText: false,
             prefix: AuthIconWrapper(
               icon: icon,

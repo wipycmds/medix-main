@@ -55,7 +55,7 @@ Map<String, dynamic> profile = {};
 
       if (response.statusCode == 200) {
         final patientProfile = jsonDecode(response.body) as Map<String, dynamic>;
-      print(patientProfile);
+      
 
       setState(() {
         profile = patientProfile['patient'];
@@ -78,7 +78,7 @@ Map<String, dynamic> profile = {};
 
   @override
   Widget build(BuildContext context) { 
-    // print(profile);
+    print('profile: $profile');
     return Scaffold(
       body: CustomScrollView(
         slivers: [

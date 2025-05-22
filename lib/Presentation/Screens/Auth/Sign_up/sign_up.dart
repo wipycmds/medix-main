@@ -321,11 +321,8 @@ Future<void> signupUser(Map<String, String> data, BuildContext context) async {
 
   try {
     final response = await apiClient.post('auth/patient/register', params: data);
-
     if (response.statusCode == 201) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Sign-up successful!')),
-      );
+        
         Navigator.push(
         context,
         MaterialPageRoute(

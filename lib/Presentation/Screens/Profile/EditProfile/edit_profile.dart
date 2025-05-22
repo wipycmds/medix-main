@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:medix/Extensions/extension.dart';
@@ -265,6 +266,7 @@ class CustomRadioButton extends StatelessWidget {
 }
 
 class NumberDropDown extends StatefulWidget {
+  
   const NumberDropDown({Key? key, required this.onChanged}) : super(key: key);
   final ValueChanged<int> onChanged;
 
@@ -320,6 +322,7 @@ class CustomTextField extends StatelessWidget {
       this.suffix,
       this.bottom,
       this.enabled = true,
+      this.controller,
       required this.onTap,
       required this.hint,
       required this.tittle})
@@ -327,6 +330,7 @@ class CustomTextField extends StatelessWidget {
   final Widget? prefix, suffix, bottom;
   final String hint, tittle;
   final bool enabled;
+  final TextEditingController? controller;
   final VoidCallback onTap;
 
   @override
@@ -359,11 +363,15 @@ class CustomTextField extends StatelessWidget {
                 Expanded(
                     child: TextField(
                   enabled: enabled,
+                  controller: controller,
                   decoration: InputDecoration.collapsed(
                       hintText: hint,
                       hintStyle: FontStyleUtilities.t1(
                           fontWeight: FWT.medium,
                           fontColor: Colors.grey.shade600)),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                  ],
                 )),
                 if (suffix != null) suffix!,
               ],

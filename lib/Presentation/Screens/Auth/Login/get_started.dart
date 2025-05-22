@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:medix/Data/Core/api_client.dart';
 import 'package:medix/Presentation/Screens/Auth/Otp/signup_otp_verification.dart';
 import 'package:medix/Presentation/Screens/Main/Home/Compo/bottomnav.dart';
+import 'package:medix/Presentation/Screens/Profile/Drawer/drawer_controller.dart';
+import 'package:medix/Presentation/Screens/Profile/EditProfile/edit_profile.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,6 +18,7 @@ class GetStarted extends StatefulWidget {
 
 class _GetStartedState extends State<GetStarted> {
   bool agreement = false;
+  int _areaCode = 0;
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -27,7 +30,7 @@ class _GetStartedState extends State<GetStarted> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     var isLight = Theme.of(context).brightness == Brightness.light;
-
+    
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 36.w),
@@ -55,40 +58,59 @@ class _GetStartedState extends State<GetStarted> {
                 ),
               ),
               SizedBox(height: 8.h),
-              MyTextField(
-                hint: '9876543210',
-                obscureText: false,
-                controller: mobileController,
-                prefix: AuthIconWrapper(
-                  icon: 'assets/Icons/call.svg',
+           
+              CustomTextField(
+                  prefix: Padding(
+                    padding: EdgeInsets.only(right: 6.w),
+                    child: SizedBox(
+                      width: 40.w,
+                      // child: NumberDropDown(
+                      //         onChanged: (newCode) {
+                      //           setState(() => _areaCode = newCode);
+                      //         },
+                      // ),
+                    ),
+                  ),
+                  hint: '9876543210',
+                  onTap: () {},
+                  tittle: 'Mobile Number',
+                  controller: mobileController,
                 ),
-              ),
+                  
+              // MyTextField(
+              //   hint: '9876543210',
+              //   obscureText: false,
+              //   controller: mobileController,
+              //   prefix: AuthIconWrapper(
+              //     icon: 'assets/Icons/call.svg',
+              //   ),
+              // ),
               SizedBox(height: 20.h),
               SizedBox(height: 11.h),
               Button(
                 tittle: 'Continue',
                 onTap: () {
-                  NavigationUtil.to(context, const BottomNav());
-                  // String mobile = mobileController.text;
+                
+                  String mobile = mobileController.text;
 
-                  // var data = {
-                  //   'type': 'mobile_no',
-                  //   'contact_value': mobile,
-                  // };
+                  var data = {
+                    'type': 'mobile_no',
+                    'contact_value': mobile,
+                  };
 
-                  // if (mobile.isEmpty) {
-                  //   ScaffoldMessenger.of(context).showSnackBar(
-                  //     SnackBar(
-                  //       content: Text(
-                  //         'Mobile must not be empty',
-                  //         textAlign: TextAlign.center,
-                  //       ),
-                  //     ),
-                  //   );
-                  //   return;
-                  // }
+                  if (mobile.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Mobile must not be empty',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
+                    return;
+                  }
 
-                  // sendVerificationCode(data, context);
+                  sendVerificationCode(data, context);
                 },
               ),
               SizedBox(height: 20.h),
