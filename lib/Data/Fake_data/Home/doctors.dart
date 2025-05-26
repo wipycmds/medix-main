@@ -3,8 +3,9 @@ import 'package:medix/Data/Model/Home/doctor.dart';
 List<DoctorModel> doctors = const [
   DoctorModel(
       id: 1,
-      patient: 1000,
+      patient: 0,
       averageRating: 4.7,
+      specialty: '',
       about: '',
       name: 'Dr. Leslie Alexander',
       image: 'assets/Images/Temp/doctor_1.png',
@@ -14,6 +15,7 @@ List<DoctorModel> doctors = const [
   DoctorModel(
       id: 2,
       patient: 1100,
+      specialty: '',
       averageRating: 4.04,
       about: '',
       name: 'Dr. Alexander Strange',
@@ -24,6 +26,7 @@ List<DoctorModel> doctors = const [
   DoctorModel(
       id: 3,
       patient: 1000,
+      specialty: '',
       averageRating: 4.8,
       about: '',
       name: 'Dr. Leslie Alexander',
@@ -34,6 +37,7 @@ List<DoctorModel> doctors = const [
   DoctorModel(
       id: 4,
       patient: 1100,
+      specialty: '',
       averageRating: 4.04,
       about: '',
       name: 'Dr. Alexander Strange',

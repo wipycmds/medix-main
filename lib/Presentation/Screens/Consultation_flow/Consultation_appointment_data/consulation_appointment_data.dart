@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:medix/Presentation/Screens/Consultation_flow/Consultation_appointment.dart/consultation_appointment.dart';
+import 'package:medix/Presentation/Screens/Select_Appoinment_Date/appointment_date.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:medix/Extensions/extension.dart';
@@ -55,6 +56,8 @@ late TextEditingController _nameController;
   
     if (userData == null) {
     return const Center(child: CircularProgressIndicator());
+
+    
   }
     return Scaffold(
       body: Stack(
@@ -85,7 +88,7 @@ late TextEditingController _nameController;
                   5.height(),
                   AppointmentTextField(
                     icon: 'assets/Icons/Calendar.svg',
-                    hint: data != '' ? data : 'dd/mm/yyyy',
+                    hint: 'Enter your DOB',
                     tittle: 'Date of Birth',
                     controller: TextEditingController(text: userData!["dob"]),
                     enabled: false,
@@ -125,7 +128,7 @@ late TextEditingController _nameController;
                       });
                                         },
                   ),
-                  5.height(),
+                  30.height(),
                   AppointmentTextField(
                     icon: 'assets/Icons/call.svg',
                     hint: 'Enter your Number',
@@ -135,21 +138,22 @@ late TextEditingController _nameController;
                   ),
                 ])),
               ),
-              SliverSizedBox(
-                child: SelectBloodGroup(onChanged: (v) {}, bloodGroups: const [
-                  'A+',
-                  'A-',
-                  'B+',
-                  'B-',
-                  'O+',
-                  'O-',
-                  'AB+',
-                  'AB-'
-                ]),
-              ),
+              // SliverSizedBox(
+              //   child: SelectBloodGroup(onChanged: (v) {}, bloodGroups: const [
+              //     'A+',
+              //     'A-',
+              //     'B+',
+              //     'B-',
+              //     'O+',
+              //     'O-',
+              //     'AB+',
+              //     'AB-'
+              //   ]),
+              // ),
               SliverSizedBox(
                 child: SelectGender(
                   onChanged: (int value) {},
+                  // initialValue: userData!["gender"] ?? 0,
                 ),
               ),
               const SliverSizedBox(
@@ -163,8 +167,10 @@ late TextEditingController _nameController;
                       isArrowButton: true,
                       tittle: 'Continue',
                       onTap: () {
-                        NavigationUtil.to(
-                            context, const ConsultationAppointment());
+                        // NavigationUtil.to(
+                        //     context, const ConsultationAppointment());
+                         NavigationUtil.to(context, const SelectAppointmentDate());
+                        // 
                       }),
                 ),
               )
@@ -191,14 +197,14 @@ class WriteYourProblem extends StatelessWidget {
           Text(
             'Write Your Problem ',
             style: FontStyleUtilities.h4(
-                    fontWeight: FWT.medium,
+                    fontWeight: FWT.regular,
                     fontColor:
                         isLight ? Colors.black : Colors.white.withOpacity(0.8))
                 .copyWith(fontSize: 19.sp),
           ),
           20.height(),
           const MyTextField(
-              maxHeight: 4,
+              maxHeight: 15,
               obscureText: false,
               hint:
                   'I am a Cardio Patinet. Feel sick last 2 weeks.I need\nto talk about cardio problem.')

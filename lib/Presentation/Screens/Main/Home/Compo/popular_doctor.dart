@@ -106,7 +106,7 @@ class DoctorCard extends StatelessWidget {
       child: FittedBox(
         child: Container(
           width: 168.w,
-          margin: EdgeInsets.only(right: 17.w, top: 16.h, bottom: 18.h),
+          margin: EdgeInsets.only(right: 16.w, top: 16.h, bottom: 18.h),
           padding: EdgeInsets.fromLTRB(6.w, 6.h, 3.w, 6.h),
           decoration: BoxDecoration(
               color: isLight ? Colors.white : ColorUtil.surfaceDark,

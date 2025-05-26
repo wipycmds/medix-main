@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medix/Extensions/white_space_extension.dart';
+import 'package:medix/Presentation/Screens/Clinic_flow/Payment_method/payment_method.dart';
 import 'package:medix/Presentation/Screens/Main/Home/Compo/bottomnav.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
@@ -128,7 +129,12 @@ class ConfirmConsultation extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 30.h),
               child:
                   Button(isArrowButton: true, tittle: 'Continue', onTap: () {
-                    NavigationUtil.to(context, const BottomNav());
+                    NavigationUtil.to(context,
+                        SelectPaymentMethod(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ));
                   }),
             )),
       ],

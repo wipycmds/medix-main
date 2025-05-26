@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medix/Data/Model/Home/doctor.dart';
 import 'package:medix/Presentation/Screens/Consultation_flow/Consultation_appointment_data/consulation_appointment_data.dart';
+import 'package:medix/Presentation/Screens/Select_Appoinment_Date/appointment_date.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:medix/Extensions/extension.dart';
@@ -12,12 +13,13 @@ class ConsultationDoctorProfile extends StatelessWidget {
 
   const ConsultationDoctorProfile({Key? key, required this.doctor}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     var isLight = Theme.of(context).brightness == Brightness.light;
-    
+
     MediaQueryData data = MediaQuery.of(context);
-  
+ 
 
     return Scaffold(
       body: SafeArea(
@@ -78,7 +80,7 @@ class ConsultationDoctorProfile extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  doctor.degree,
+                                  doctor.specialty,
                                   style: FontStyleUtilities.h5(
                                           fontWeight: FWT.medium,
                                           fontColor: isLight
@@ -87,55 +89,55 @@ class ConsultationDoctorProfile extends StatelessWidget {
                                       .copyWith(fontSize: 18.sp),
                                 ),
                                 9.width(),
-                                Text(
-                                  '(4 years Experience)',
-                                  style: FontStyleUtilities.t2(
-                                      fontWeight: FWT.regular,
-                                      fontColor: isLight
-                                          ? Colors.black.withOpacity(.30)
-                                          : Colors.white.withOpacity(.80)),
-                                ),
+                                // Text(
+                                //   '(4 year)',
+                                //   style: FontStyleUtilities.t2(
+                                //       fontWeight: FWT.regular,
+                                //       fontColor: isLight
+                                //           ? Colors.black.withOpacity(.30)
+                                //           : Colors.white.withOpacity(.80)),
+                                // ),
                               ],
                             ),
-                            9.height(),
-                            Row(
-                              children: [
-                                const TagIconWrapper(
-                                    padding: 9,
-                                    icon: 'assets/Icons/3 Friends.svg',
-                                    param: 'Patient',
-                                    value: '1000+'),
-                                24.width(),
-                                const TagIconWrapper(
-                                    iconColor: Color(0xffF6A936),
-                                    scale: .5,
-                                    icon: 'assets/Icons/Star.svg',
-                                    param: 'Rating',
-                                    value: '4.05'),
-                              ],
-                            ),
+                            // 9.height(),
+                            // Row(
+                            //   children: [
+                            //     const TagIconWrapper(
+                            //         padding: 9,
+                            //         icon: 'assets/Icons/3 Friends.svg',
+                            //         param: 'Patient',
+                            //         value: '1000+'),
+                            //     24.width(),
+                            //     const TagIconWrapper(
+                            //         iconColor: Color(0xffF6A936),
+                            //         scale: .5,
+                            //         icon: 'assets/Icons/Star.svg',
+                            //         param: 'Rating',
+                            //         value: '4.05'),
+                            //   ],
+                            // ),
+                            // 5.height(),
+                            // Text(
+                            //   'Specialist',
+                            //   style: FontStyleUtilities.h3(
+                            //           fontWeight: FWT.medium,
+                            //           fontColor: isLight
+                            //               ? Colors.black.withOpacity(.50)
+                            //               : Colors.white.withOpacity(.70))
+                            //       .copyWith(fontSize: 22.sp),
+                            // ),
+                            // 7.height(),
+                            // TheMultiChildAnimationWrapper(
+                            //     spacing: 12.w,
+                            //     runSpacing: 12.w,
+                            //     animationParentType: AnimationParentType.wrap,
+                            //     size: data.size,
+                            //     children: ['Skin Hair', 'Allergy', 'STD']
+                            //         .map((e) => SpecialistTag(tag: e))
+                            //         .toList()),
                             24.height(),
                             Text(
-                              'Specialist',
-                              style: FontStyleUtilities.h3(
-                                      fontWeight: FWT.medium,
-                                      fontColor: isLight
-                                          ? Colors.black.withOpacity(.50)
-                                          : Colors.white.withOpacity(.70))
-                                  .copyWith(fontSize: 22.sp),
-                            ),
-                            7.height(),
-                            TheMultiChildAnimationWrapper(
-                                spacing: 12.w,
-                                runSpacing: 12.w,
-                                animationParentType: AnimationParentType.wrap,
-                                size: data.size,
-                                children: ['Skin Hair', 'Allergy', 'STD']
-                                    .map((e) => SpecialistTag(tag: e))
-                                    .toList()),
-                            24.height(),
-                            Text(
-                              'Working time',
+                              'Clinics',
                               style: FontStyleUtilities.h3(
                                       fontWeight: FWT.medium,
                                       fontColor:
@@ -143,13 +145,45 @@ class ConsultationDoctorProfile extends StatelessWidget {
                                   .copyWith(fontSize: 22.sp),
                             ),
                             2.height(),
-                            Text(
-                              'Sat - Mon 10:30 AM - 06:00PM',
-                              style: FontStyleUtilities.h6(
-                                  fontWeight: FWT.regular,
-                                  fontColor: isLight
-                                      ? Colors.black.withOpacity(.50)
-                                      : Colors.white.withOpacity(0.70)),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Reggie Optical Clinic',
+                                  style: FontStyleUtilities.h6(
+                                      fontWeight: FWT.medium,
+                                      fontColor: isLight
+                                          ? Colors.black
+                                          : Colors.white),
+                                ),
+                                4.height(),
+                                Text(
+                                  'Sat - Mon 10:30 AM - 06:00 PM',
+                                  style: FontStyleUtilities.h6(
+                                      fontWeight: FWT.regular,
+                                      fontColor: isLight
+                                          ? Colors.black.withOpacity(.50)
+                                          : Colors.white.withOpacity(0.70)),
+                                ),
+                                16.height(),
+                                Text(
+                                  'Jakes Optical Clinic',
+                                  style: FontStyleUtilities.h6(
+                                      fontWeight: FWT.medium,
+                                      fontColor: isLight
+                                          ? Colors.black
+                                          : Colors.white),
+                                ),
+                                4.height(),
+                                Text(
+                                  'Tue - Fri 09:00 AM - 05:00 PM',
+                                  style: FontStyleUtilities.h6(
+                                      fontWeight: FWT.regular,
+                                      fontColor: isLight
+                                          ? Colors.black.withOpacity(.50)
+                                          : Colors.white.withOpacity(0.70)),
+                                ),
+                              ],
                             ),
                             25.height(),
                             Text(
@@ -194,8 +228,11 @@ class ConsultationDoctorProfile extends StatelessWidget {
                   child: Button(
                       tittle: 'Book Appointment',
                       onTap: () {
-                        NavigationUtil.to(
-                            context, const ConsultationAppointmentData());
+                        print(doctor.id);
+                        // NavigationUtil.to(
+                        //     context, const ConsultationAppointmentData());
+                        NavigationUtil.to(context, const SelectAppointmentDate());
+                        
                       }),
                 )),
           ],

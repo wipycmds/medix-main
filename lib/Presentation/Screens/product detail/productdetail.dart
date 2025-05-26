@@ -243,8 +243,8 @@ class _ProductDetailState extends State<ProductDetail>
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    height: 130.h,
-                    padding: EdgeInsets.only(left: 24.w, top: 10.h),
+                    height: 120.h,
+                    padding: EdgeInsets.only(left: 24.w, top: 10.h, bottom: 10.h),
                     child: GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       padding: const EdgeInsets.all(0),

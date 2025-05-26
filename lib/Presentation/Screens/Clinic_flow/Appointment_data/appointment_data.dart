@@ -104,11 +104,11 @@ class _AppointmentDataState extends State<AppointmentData> {
                   'AB-'
                 ]),
               ),
-              SliverSizedBox(
-                child: SelectGender(
-                  onChanged: (int value) {},
-                ),
-              ),
+              // SliverSizedBox(
+              //   child: SelectGender(
+              //     onChanged: (int value) {},
+              //   ),
+              // ),
               const SliverSizedBox(
                 child: WriteYourProblem(),
               ),

@@ -18,7 +18,7 @@ class GetStarted extends StatefulWidget {
 
 class _GetStartedState extends State<GetStarted> {
   bool agreement = false;
-  int _areaCode = 0;
+  final int _areaCode = 0;
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -64,11 +64,11 @@ class _GetStartedState extends State<GetStarted> {
                     padding: EdgeInsets.only(right: 6.w),
                     child: SizedBox(
                       width: 40.w,
-                      // child: NumberDropDown(
-                      //         onChanged: (newCode) {
-                      //           setState(() => _areaCode = newCode);
-                      //         },
-                      // ),
+                      child: NumberDropDown(
+                              onChanged: (newCode) {
+                                
+                              },
+                      ),
                     ),
                   ),
                   hint: '9876543210',
@@ -90,27 +90,27 @@ class _GetStartedState extends State<GetStarted> {
               Button(
                 tittle: 'Continue',
                 onTap: () {
-                
-                  String mobile = mobileController.text;
+                NavigationUtil.to(context, const BottomNav());
+                  // String mobile = mobileController.text;
 
-                  var data = {
-                    'type': 'mobile_no',
-                    'contact_value': mobile,
-                  };
+                  // var data = {
+                  //   'type': 'mobile_no',
+                  //   'contact_value': mobile,
+                  // };
 
-                  if (mobile.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          'Mobile must not be empty',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    );
-                    return;
-                  }
+                  // if (mobile.isEmpty) {
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //     SnackBar(
+                  //       content: Text(
+                  //         'Mobile must not be empty',
+                  //         textAlign: TextAlign.center,
+                  //       ),
+                  //     ),
+                  //   );
+                  //   return;
+                  // }
 
-                  sendVerificationCode(data, context);
+                  // sendVerificationCode(data, context);
                 },
               ),
               SizedBox(height: 20.h),

@@ -7,7 +7,8 @@ import 'appointment_data_radio_wrapper.dart';
 class SelectGender extends StatefulWidget {
   const SelectGender({
     Key? key,
-    required this.onChanged,
+    required this.onChanged, 
+    // required initialValue,
   }) : super(key: key);
 
   final ValueChanged<int> onChanged;

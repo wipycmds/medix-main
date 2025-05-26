@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medix/Data/Model/Clinic/clinic_visit_card.dart';
+import 'package:medix/Extensions/text_trimming_extension.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,7 +21,7 @@ class ClinicVisitCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 100.h,
+        height: 60.h,
         margin: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0),
         decoration: BoxDecoration(
             border: selected!
@@ -48,12 +49,14 @@ class ClinicVisitCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(info.name,
+                      Text(info.name.shrink(17),
                           style: FontStyleUtilities.h4(
                                   fontWeight: FWT.medium,
                                   fontColor:
                                       isLight ? Colors.black : Colors.white)
-                              .copyWith(fontSize: 20)),
+                              .copyWith(fontSize: 20),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2),
                       // Text(
                       //   "${info.hospitalCount} Doctors",
                       //   style: FontStyleUtilities.h6(
@@ -72,17 +75,17 @@ class ClinicVisitCard extends StatelessWidget {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const SvgIcon('assets/Icons/Time.svg'),
+                          // const SvgIcon('assets/Icons/Time.svg'),
                           SizedBox(width: 1.w),
-                          Text(
-                            'Available time',
-                            style: FontStyleUtilities.t2(
-                                height: 1,
-                                fontWeight: FWT.regular,
-                                fontColor: isLight
-                                    ? Colors.black.withOpacity(.30)
-                                    : Colors.white),
-                          ),
+                          // Text(
+                          //   'Available time',
+                          //   style: FontStyleUtilities.t2(
+                          //       height: 1,
+                          //       fontWeight: FWT.regular,
+                          //       fontColor: isLight
+                          //           ? Colors.black.withOpacity(.30)
+                          //           : Colors.white),
+                          // ),
                           const Spacer(),
                           // Text(
                           //   "Dec ${info.time}",

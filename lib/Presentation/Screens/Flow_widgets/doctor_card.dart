@@ -23,7 +23,7 @@ class DoctorCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 161.h,
+        height: 90.h,
         width: double.infinity,
         margin: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0),
         decoration: BoxDecoration(
@@ -64,47 +64,47 @@ class DoctorCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            info.degree,
+                            info.specialty.shrink(17),
                             style: FontStyleUtilities.h6(
                                 fontWeight: FWT.medium,
                                 fontColor: isLight
                                     ? Colors.black.withOpacity(.50)
                                     : Colors.white.withOpacity(.70)),
                           ),
-                          Text(
-                            '(${info.reviews} Reviews)',
-                            style: FontStyleUtilities.t2(
-                                fontWeight: FWT.regular,
-                                fontColor: isLight
-                                    ? Colors.black.withOpacity(.30)
-                                    : Colors.white.withOpacity(.60)),
-                          ),
+                          // Text(
+                          //   '(${info.reviews} Reviews)',
+                          //   style: FontStyleUtilities.t2(
+                          //       fontWeight: FWT.regular,
+                          //       fontColor: isLight
+                          //           ? Colors.black.withOpacity(.30)
+                          //           : Colors.white.withOpacity(.60)),
+                          // ),
                         ]),
                     2.height(),
-                    Text(
-                      '${info.experience} years Experience',
-                      style: FontStyleUtilities.t2(
-                          fontWeight: FWT.regular,
-                          fontColor: isLight
-                              ? Colors.black.withOpacity(.30)
-                              : Colors.white.withOpacity(.60)),
-                    ),
+                    // Text(
+                    //   '${info.experience} years Experience',
+                    //   style: FontStyleUtilities.t2(
+                    //       fontWeight: FWT.regular,
+                    //       fontColor: isLight
+                    //           ? Colors.black.withOpacity(.30)
+                    //           : Colors.white.withOpacity(.60)),
+                    // ),
                     10.height(),
-                    Row(
-                      children: [
-                        TagIconWrapper(
-                            padding: 9,
-                            icon: 'assets/Icons/3 Friends.svg',
-                            param: 'Patient',
-                            value: '${info.patient}+'),
-                        19.width(),
-                        TagIconWrapper(
-                            scale: .5,
-                            icon: 'assets/Icons/Star.svg',
-                            param: 'Rating',
-                            value: '${info.averageRating}+'),
-                      ],
-                    )
+                    // Row(
+                    //   children: [
+                    //     TagIconWrapper(
+                    //         padding: 9,
+                    //         icon: 'assets/Icons/3 Friends.svg',
+                    //         param: 'Patient',
+                    //         value: '${info.patient}+'),
+                    //     19.width(),
+                    //     TagIconWrapper(
+                    //         scale: .5,
+                    //         icon: 'assets/Icons/Star.svg',
+                    //         param: 'Rating',
+                    //         value: '${info.averageRating}+'),
+                    //   ],
+                    // )
                   ],
                 ),
               ),

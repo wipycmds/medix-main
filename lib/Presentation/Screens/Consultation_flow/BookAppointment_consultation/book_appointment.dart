@@ -6,7 +6,6 @@ import 'package:medix/Data/Core/api_client.dart';
 import 'package:medix/Data/Model/Consultation/providerTag.dart';
 import 'package:medix/Extensions/white_space_extension.dart';
 import 'package:medix/Presentation/Constants/gradients.dart';
-import 'package:medix/Presentation/Screens/Consultation_flow/Consultation_doctors/select_doctor_consultation.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

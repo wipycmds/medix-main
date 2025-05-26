@@ -22,11 +22,11 @@ class DoctorModel {
     required this.image,
     required this.degree,
     required this.reviews,
-    required this.experience, 
+    required this.experience, required this.specialty, 
     
   });
 
-  final String name, image, degree, about;
+  final String name, image, degree, about, specialty;
   final int reviews, patient, id;
   final double experience, averageRating;
 

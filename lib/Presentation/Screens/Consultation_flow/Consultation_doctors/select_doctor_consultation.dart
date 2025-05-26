@@ -11,18 +11,13 @@ import 'package:medix/Utils/utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stacked/stacked.dart';
 //
-import 'package:medix/Data/Fake_data/Home/doctors.dart';
-import 'package:medix/Data/Fake_data/Clinic_visit/clinic_visits.dart';
 import 'select_doctor_consultation_view_model.dart';
 //
 import '../Shared/app_bar.dart' as bar;
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import '../../Flow_widgets/doctor_card.dart';
-
 class ConsultationSelectDoctor extends StatefulWidget {
-  final int servicesId;
-
-  const ConsultationSelectDoctor({Key? key, required this.servicesId}) : super(key: key);
+  const ConsultationSelectDoctor({Key? key}) : super(key: key);
 
   @override
   State<ConsultationSelectDoctor> createState() => _ConsultationSelectDoctorState();
@@ -30,7 +25,7 @@ class ConsultationSelectDoctor extends StatefulWidget {
 
 class _ConsultationSelectDoctorState extends State<ConsultationSelectDoctor> {
    List<DoctorModel> doctors = []; 
-  int selectedId = 0;
+
   @override
   void initState() {
     super.initState();
@@ -41,33 +36,37 @@ class _ConsultationSelectDoctorState extends State<ConsultationSelectDoctor> {
 
 Future<void> _fetchDoctors() async {
   final apiClient = ApiClient(http.Client());
-  final providerId = {'id': widget.servicesId};
 
   try {
-    final response = await apiClient.post(
-      'auth/apps/fetch/provider/specialty/',
-      params: providerId,
+    final response = await apiClient.get(
+      'auth/apps/group/provider/'
     );
+
 
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
 
       if (responseData is Map<String, dynamic>) {
-        final providerSpecialties = responseData['providerSpecialties'] ?? [];
-
+      
+        final groupProvider = responseData['group'] ?? [];
+ 
         final List<DoctorModel> fetchedDoctors = List<DoctorModel>.from(
-          providerSpecialties.map((item) {
-            final provider = item['provider'] ?? {};
-            final user = provider['user'] ?? {};
+          groupProvider.map((item) {
+            final provider = item['providers'] ?? {};
+            final user = provider.map((providerItem) => providerItem['user'] ?? {}).toList();
 
-
+            final fname = user.map((userItem) => userItem['fname'] ?? '').join(', ');
+            final mname = user.map((userItem) => userItem['lname'] ?? '').join(', ');
+            final lname = user.map((userItem) => userItem['lname'] ?? '').join(', ');
+            final name = '$fname $mname $lname';
             return DoctorModel(
-              id: provider['id'] ?? 0,
-              name: '${provider['salutation'] ?? ''} ${user['fname'] ?? ''} ${user['lname'] ?? ''}'.trim(),
+              id: item["id"] ?? 0,
+              name: item["name"] ?? name,
               image: '',
-              degree: provider['certification'] ?? 'Unknown',
+              degree: '',
+              specialty:  '',
               // specialization: '',
-              about: provider['description'] ?? '',
+              about:  '',
               patient: 1000,
               averageRating: 4.5,
               reviews: 100,

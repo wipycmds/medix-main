@@ -6,7 +6,6 @@ import 'package:medix/Presentation/Constants/gradients.dart';
 import 'package:medix/Presentation/Screens/Consultation_flow/Confrim_consulatation/confirm_consultation.dart';
 import 'package:medix/Presentation/Screens/Consultation_flow/audio_call_doctor/audio_call_doctor.dart';
 import 'package:medix/Presentation/Screens/Consultation_flow/video_call_doctor/video_call_doctor.dart';
-import 'package:medix/Presentation/Screens/Select_Appoinment_Date/appointment_date.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,36 +22,36 @@ class ConsultationAppointment extends StatefulWidget {
 
 class _ConsultationAppointmentState extends State<ConsultationAppointment>
     with SingleTickerProviderStateMixin {
-  // final List<String> _tabNames = <String>[
-  //   'Morning Schedule',
-  //   'Evening Schedule'
-  // ];
+  final List<String> _tabNames = <String>[
+    'Morning Schedule',
+    'Evening Schedule'
+  ];
   int _selectedIndex = 0;
-  // late List<Tab> _tabs;
-  // late final TabController _tabController;
+  late List<Tab> _tabs;
+  late final TabController _tabController;
   late FilterController<FeesModel> _feesController;
   late FilterController<String> _filterController;
   @override
   void initState() {
     _filterController = FilterController<String>();
     _feesController = FilterController<FeesModel>();
-    // _tabController = TabController(
-    //   length: _tabNames.length,
-    //   vsync: this,
-    // );
-    // _tabs = <Tab>[
-    //   ..._tabNames
-    //       .map((e) => Tab(
-    //             text: e,
-    //           ))
+    _tabController = TabController(
+      length: _tabNames.length,
+      vsync: this,
+    );
+    _tabs = <Tab>[
+      ..._tabNames
+          .map((e) => Tab(
+                text: e,
+              ))
           
-    // ];
+    ];
     super.initState();
   }
 
   @override
   void dispose() {
-    // _tabController.dispose();
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -78,58 +77,53 @@ class _ConsultationAppointmentState extends State<ConsultationAppointment>
                     ),
                   ),
                 ),
-                // TabBar(
-                //   labelPadding: EdgeInsets.symmetric(horizontal: 16.w),
-                //   isScrollable: true,
-                //   unselectedLabelStyle:
-                //       FontStyleUtilities.h4(fontWeight: FWT.regular)
-                //           .copyWith(fontSize: 19),
-                //   labelStyle: FontStyleUtilities.h4(fontWeight: FWT.medium)
-                //       .copyWith(fontSize: 19),
-                //   labelColor: isLight ? Colors.black : Colors.white,
-                //   unselectedLabelColor: const Color(0xffA6A6A6),
-                //   tabs: _tabs,
-                //   controller: _tabController,
-                // ),
+                TabBar(
+                  labelPadding: EdgeInsets.symmetric(horizontal: 16.w),
+                  isScrollable: true,
+                  unselectedLabelStyle:
+                      FontStyleUtilities.h4(fontWeight: FWT.regular)
+                          .copyWith(fontSize: 19),
+                  labelStyle: FontStyleUtilities.h4(fontWeight: FWT.medium)
+                      .copyWith(fontSize: 19),
+                  labelColor: isLight ? Colors.black : Colors.white,
+                  unselectedLabelColor: const Color(0xffA6A6A6),
+                  tabs: _tabs,
+                  controller: _tabController,
+                ),
               ],
             ),
           ),
         ),
         leading: const MyBackButton(),
-        title: const Text('Appointments'),
+        title: const Text('Appointment'),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           14.height(),
-           SliverSizedBox(
-                child: DateWidget(
-                  onChanged: (DateTime value) {},
-                ),
-              ),
-          // SizedBox(
-          //   height: 216.h,
-          //   child: TabBarView(controller: _tabController, children: [
-          //     Schedules(morningTimes: const [
-          //       '10:30 AM',
-          //       '11:00 AM',
-          //       '11:30 AM',
-          //       '12:00 PM',
-          //       '12:30 PM',
-          //       '01:00 pM',
-          //       '01:30 AM',
-          //     ], controller: _filterController),
-          //     Schedules(morningTimes: const [
-          //       '02:30 PM',
-          //       '03:00 PM',
-          //       '03:30 PM',
-          //       '04:00 PM',
-          //       '04:30 PM',
-          //       '05:00 PM',
-          //       '05:30 PM',
-          //     ], controller: _filterController),
-          //   ]),
-          // ),
+          SizedBox(
+            height: 216.h,
+            child: TabBarView(controller: _tabController, children: [
+              Schedules(morningTimes: const [
+                '10:30 AM',
+                '11:00 AM',
+                '11:30 AM',
+                '12:00 PM',
+                '12:30 PM',
+                '01:00 pM',
+                '01:30 AM',
+              ], controller: _filterController),
+              Schedules(morningTimes: const [
+                '02:30 PM',
+                '03:00 PM',
+                '03:30 PM',
+                '04:00 PM',
+                '04:30 PM',
+                '05:00 PM',
+                '05:30 PM',
+              ], controller: _filterController),
+            ]),
+          ),
           23.height(),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),

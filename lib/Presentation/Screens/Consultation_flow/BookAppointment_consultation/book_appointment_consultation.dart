@@ -26,7 +26,7 @@ class ConsultationBookAppointment extends StatefulWidget {
 class _ConsultationBookAppointmentState extends State<ConsultationBookAppointment> {
   List<Map<String, dynamic>> dataService = [];
 
-  int _servicesId = 0;
+  final int _servicesId = 0;
 
   @override
   void initState() {
@@ -84,33 +84,33 @@ class _ConsultationBookAppointmentState extends State<ConsultationBookAppointmen
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      // children: [
-                      //   Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: [
-                      //       Text(
-                      //         '24/7 Doctor Video\nConsultation',
-                      //         style: FontStyleUtilities.h2(
-                      //           height: 1.26,
-                      //           fontWeight: FWT.medium,
-                      //           fontColor: isLight ? Colors.black : Colors.white,
-                      //         ),
-                      //       ),
-                      //       Text(
-                      //         'Find the service you are ',
-                      //         style: FontStyleUtilities.h6(
-                      //           fontWeight: FWT.medium,
-                      //           fontColor: isLight ? const Color(0xffB9B9B9) : Colors.white,
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      //   const Spacer(),
-                      //   Padding(
-                      //     padding: EdgeInsets.only(bottom: 15.h),
-                      //     child: IconWrapper(onTap: () {}, icon: 'assets/Icons/Search.svg'),
-                      //   ),
-                      // ],
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Text(
+                            //   '24/7 Doctor Video\nConsultation',
+                            //   style: FontStyleUtilities.h2(
+                            //     height: 1.26,
+                            //     fontWeight: FWT.medium,
+                            //     fontColor: isLight ? Colors.black : Colors.white,
+                            //   ),
+                            // ),
+                            Text(
+                              'Find the service you are ',
+                              style: FontStyleUtilities.h6(
+                                fontWeight: FWT.medium,
+                                fontColor: isLight ? const Color(0xffB9B9B9) : Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 15.h),
+                          child: IconWrapper(onTap: () {}, icon: 'assets/Icons/Search.svg'),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -153,10 +153,10 @@ class _ConsultationBookAppointmentState extends State<ConsultationBookAppointmen
                   tittle: 'Continue',
                   onTap: () {
                     if (model.selectedServiceId != null) {
-                      NavigationUtil.to(
-                        context,
-                        ConsultationSelectDoctor(servicesId: model.selectedServiceId!),
-                      );
+                      // NavigationUtil.to(
+                      //   context,
+                      //   ConsultationSelectDoctor(servicesId: model.selectedServiceId!),
+                      // );
                     } else {
                       // Optional: show warning if no clinic selected
                       ScaffoldMessenger.of(context).showSnackBar(

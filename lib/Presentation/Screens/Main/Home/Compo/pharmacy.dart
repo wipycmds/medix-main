@@ -74,6 +74,7 @@ class PharmacyCard extends StatelessWidget {
     var isLight = Theme.of(context).brightness == Brightness.light;
     return GestureDetector(
       onTap: () {
+        print('object');
         NavigationUtil.to(
             context,
             ProductDetail(

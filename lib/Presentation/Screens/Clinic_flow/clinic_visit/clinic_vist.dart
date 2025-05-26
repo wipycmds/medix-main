@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medix/Data/Fake_data/Clinic_visit/clinic_visits.dart';
+import 'package:medix/Data/Fake_data/Clinic_visit/labs.dart';
 import 'package:medix/Presentation/Screens/Clinic_flow/clinic_visit/clinic_view_model.dart';
 import 'package:medix/Presentation/Screens/Clinic_flow/hospital_list/hospital_list.dart';
 import 'package:medix/Utils/utils.dart';
@@ -76,7 +77,7 @@ class ClinicVisit extends StatelessWidget {
                                 },
                                 info: clinics[index],
                               ),
-                          childCount: clinics.length)),
+                          childCount: labs.length)),
                   SliverSizedBox(height: 85.h)
                 ],
               ),

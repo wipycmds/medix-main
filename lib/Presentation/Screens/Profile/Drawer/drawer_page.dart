@@ -81,23 +81,23 @@ class _DrawerPageState extends State<DrawerPage> {
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  DrawerTile(
-                      isSelected: controller.index == 0,
-                      onTap: () {
-                        selectDestination(0);
-                        NavigationUtil.to(context, const MyAppointmentScreen());
-                      },
-                      leading: Icons.meeting_room_outlined,
-                      tittle: 'My Activity'),
-                  12.height(),
-                  DrawerTile(
-                      isSelected: controller.index == 1,
-                      onTap: () {
-                        selectDestination(1);
-                        NavigationUtil.to(context, ClinicVisit());
-                      },
-                      leading: Icons.update,
-                      tittle: 'Schedule Appointment'),
+                  // DrawerTile(
+                  //     isSelected: controller.index == 0,
+                  //     onTap: () {
+                  //       selectDestination(0);
+                  //       NavigationUtil.to(context, const MyAppointmentScreen());
+                  //     },
+                  //     leading: Icons.meeting_room_outlined,
+                  //     tittle: 'My Activity'),
+                  // 12.height(),
+                  // DrawerTile(
+                  //     isSelected: controller.index == 1,
+                  //     onTap: () {
+                  //       selectDestination(1);
+                  //       NavigationUtil.to(context, ClinicVisit());
+                  //     },
+                  //     leading: Icons.update,
+                  //     tittle: 'Schedule Appointment'),
                 ],
               ),
             ),
@@ -109,24 +109,24 @@ class _DrawerPageState extends State<DrawerPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Column(
                 children: [
-                  DrawerTile(
-                      isSelected: controller.index == 2,
-                      onTap: () {
-                        selectDestination(2);
-                        NavigationUtil.to(context, const AboutUs());
-                      },
-                      leading: Icons.info_outline_rounded,
-                      tittle: 'About Us'),
-                  12.height(),
-                  DrawerTile(
-                      isSelected: controller.index == 3,
-                      onTap: () {
-                        selectDestination(3);
-                        NavigationUtil.to(context, const HelpCenter());
-                      },
-                      leading: Icons.help_center_outlined,
-                      tittle: 'Help Center'),
-                  12.height(),
+                  // DrawerTile(
+                  //     isSelected: controller.index == 2,
+                  //     onTap: () {
+                  //       selectDestination(2);
+                  //       NavigationUtil.to(context, const AboutUs());
+                  //     },
+                  //     leading: Icons.info_outline_rounded,
+                  //     tittle: 'About Us'),
+                  // 12.height(),
+                  // DrawerTile(
+                  //     isSelected: controller.index == 3,
+                  //     onTap: () {
+                  //       selectDestination(3);
+                  //       NavigationUtil.to(context, const HelpCenter());
+                  //     },
+                  //     leading: Icons.help_center_outlined,
+                  //     tittle: 'Help Center'),
+                  // 12.height(),
                 ],
               ),
             ),
@@ -142,13 +142,13 @@ class _DrawerPageState extends State<DrawerPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     12.height(),
-                    DrawerTile(
-                        isSelected: controller.index == 4,
-                        onTap: () {
-                          selectDestination(4);
-                        },
-                        leading: Icons.delete_forever_outlined,
-                        tittle: 'Delete Account'),
+                    // DrawerTile(
+                    //     isSelected: controller.index == 4,
+                    //     onTap: () {
+                    //       selectDestination(4);
+                    //     },
+                    //     leading: Icons.delete_forever_outlined,
+                    //     tittle: 'Delete Account'),
                     12.height(),
                     DrawerTile(
                         isSelected: controller.index == 5,
