@@ -11,13 +11,18 @@ import 'package:medix/Utils/utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stacked/stacked.dart';
 //
+import 'package:medix/Data/Fake_data/Home/doctors.dart';
+import 'package:medix/Data/Fake_data/Clinic_visit/clinic_visits.dart';
 import 'select_doctor_consultation_view_model.dart';
 //
 import '../Shared/app_bar.dart' as bar;
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import '../../Flow_widgets/doctor_card.dart';
+
 class ConsultationSelectDoctor extends StatefulWidget {
-  const ConsultationSelectDoctor({Key? key}) : super(key: key);
+  final int servicesId;
+
+  const ConsultationSelectDoctor({Key? key, required this.servicesId}) : super(key: key);
 
   @override
   State<ConsultationSelectDoctor> createState() => _ConsultationSelectDoctorState();
@@ -25,7 +30,7 @@ class ConsultationSelectDoctor extends StatefulWidget {
 
 class _ConsultationSelectDoctorState extends State<ConsultationSelectDoctor> {
    List<DoctorModel> doctors = []; 
-
+  int selectedId = 0;
   @override
   void initState() {
     super.initState();
@@ -36,37 +41,52 @@ class _ConsultationSelectDoctorState extends State<ConsultationSelectDoctor> {
 
 Future<void> _fetchDoctors() async {
   final apiClient = ApiClient(http.Client());
+  final groupId = {'group_id': widget.servicesId};
 
   try {
-    final response = await apiClient.get(
-      'auth/apps/group/provider/'
+    final response = await apiClient.post(
+      'auth/apps/fetch/provider/',
+      params: groupId,
     );
-
 
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
-
-      if (responseData is Map<String, dynamic>) {
-      
-        final groupProvider = responseData['group'] ?? [];
  
-        final List<DoctorModel> fetchedDoctors = List<DoctorModel>.from(
-          groupProvider.map((item) {
-            final provider = item['providers'] ?? {};
-            final user = provider.map((providerItem) => providerItem['user'] ?? {}).toList();
+      if (responseData is Map<String, dynamic>) {
+        final provider = responseData['doctor'] ?? [];        
 
-            final fname = user.map((userItem) => userItem['fname'] ?? '').join(', ');
-            final mname = user.map((userItem) => userItem['lname'] ?? '').join(', ');
-            final lname = user.map((userItem) => userItem['lname'] ?? '').join(', ');
-            final name = '$fname $mname $lname';
+        final List<DoctorModel> fetchedDoctors = List<DoctorModel>.from(
+          provider.map((item) {
+            // print(item['provider_specialties'][0]['specialty']['name']);
+            final user = item['user'] ?? {};
+
+            final salutation = item['salutation'] ?? '';
+            final fname = user['fname'] ?? '';
+            final mname = user['mname'] ?? '';
+            final lname = user['lname'] ?? '';
+
+            final fullName = [salutation, fname, mname, lname]
+                .where((part) => part != null && part.toString().isNotEmpty)
+                .join(' ')
+                .trim();
+
             return DoctorModel(
-              id: item["id"] ?? 0,
-              name: item["name"] ?? name,
-              image: '',
-              degree: '',
-              specialty:  '',
-              // specialization: '',
-              about:  '',
+              id: user['id'] ?? 0,
+              groupId: item['group_id'] ?? 0,
+              clinicId: item['clinic'][0]['id'] ?? 0,
+              clinicName: item!['clinic'][0]['name'] ?? '',
+              clinicAddress: [
+                item!['clinic'][0]['street'] ?? '',
+                item!['clinic'][0]['city'] ?? '',
+                item!['clinic'][0]['province'] ?? '',
+                item!['clinic'][0]['country'] ?? '',
+                item!['clinic'][0]['zip'] ?? ''
+              ].where((part) => part.isNotEmpty).join(', '),
+              name: fullName,
+              image: user['avatar_url'] ?? '',
+              specialty: item['provider_specialties'][0]['specialty']['name'],
+              degree: item['certification'] ?? 'Unknown',
+              about: item['description'] ?? '',
               patient: 1000,
               averageRating: 4.5,
               reviews: 100,
@@ -74,6 +94,7 @@ Future<void> _fetchDoctors() async {
             );
           }),
         );
+
 
         setState(() {
           doctors = fetchedDoctors;
@@ -161,8 +182,8 @@ Future<void> _fetchDoctors() async {
                 tittle: 'Continue',
                 onTap: () {
                   final selectedDoctor = model.selectedDoctor;
+                 
                   if (selectedDoctor != null) {
-                   
                     NavigationUtil.to(
                       context,
                       ConsultationDoctorProfile(doctor: selectedDoctor),

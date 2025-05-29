@@ -78,7 +78,6 @@ Map<String, dynamic> profile = {};
 
   @override
   Widget build(BuildContext context) { 
-    print('profile: $profile');
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -187,6 +186,10 @@ class PersonalInfo extends StatelessWidget {
                     value: profile['dob'] ?? '',
                     isLight: isLight),
                 14.height(),
+                _buildData(
+                    param: 'Emergency Contact',
+                    value: profile['emergency_contact_number'] ?? '',
+                    isLight: isLight),
               ],
             ),
           ),
@@ -198,48 +201,48 @@ class PersonalInfo extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text(
-                      'Medical Info',
-                      style: FontStyleUtilities.h4(
-                          fontWeight: FWT.bold,
-                          fontColor: isLight ? Colors.black : Colors.white),
-                    ),
+                    // Text(
+                    //   'Medical Info',
+                    //   style: FontStyleUtilities.h4(
+                    //       fontWeight: FWT.bold,
+                    //       fontColor: isLight ? Colors.black : Colors.white),
+                    // ),
                     const Spacer(),
-                    CustomOutlinedButton(text: 'Change', onTap: () {})
+                    // CustomOutlinedButton(text: 'Change', onTap: () {})
                   ],
                 ),
                 10.height(),
-                Text(
-                  'Illness',
-                  style: FontStyleUtilities.t1(
-                      fontWeight: FWT.medium,
-                      height: 1,
-                      fontColor: isLight
-                          ? Colors.black
-                          : Colors.white.withOpacity(0.80)),
-                ),
+                // Text(
+                //   'Illness',
+                //   style: FontStyleUtilities.t1(
+                //       fontWeight: FWT.medium,
+                //       height: 1,
+                //       fontColor: isLight
+                //           ? Colors.black
+                //           : Colors.white.withOpacity(0.80)),
+                // ),
                 8.height(),
-                Wrap(
-                  spacing: 6.w,
-                  runSpacing: 8.w,
-                  children: [
-                    'Migraine',
-                    'Asthma',
-                    'Low Blood Sugar',
-                    'Diabetes',
-                    'Kidney Stone',
-                  ].map((e) => IllnessTag(value: e)).toList(),
-                ),
+                // Wrap(
+                //   spacing: 6.w,
+                //   runSpacing: 8.w,
+                //   children: [
+                //     'Migraine',
+                //     'Asthma',
+                //     'Low Blood Sugar',
+                //     'Diabetes',
+                //     'Kidney Stone',
+                //   ].map((e) => IllnessTag(value: e)).toList(),
+                // ),
                 14.height(),
-                _buildData(
-                    param: 'Medical Record',
-                    value: 'Med_report.pdf',
-                    isLight: isLight),
+                // _buildData(
+                //     param: 'Medical Record',
+                //     value: 'Med_report.pdf',
+                //     isLight: isLight),
                 14.height(),
-                _buildData(
-                    param: 'Emergency Contact',
-                    value: profile['emergency_contact_number'] ?? '',
-                    isLight: isLight),
+                // _buildData(
+                //     param: 'Emergency Contact',
+                //     value: profile['emergency_contact_number'] ?? '',
+                //     isLight: isLight),
               ],
             ),
           ),
@@ -313,7 +316,7 @@ class ProfileHeader extends StatelessWidget {
             ///EDIT ICON
             GestureDetector(
               onTap: () {
-                NavigationUtil.to(context, const EditProfile());
+                NavigationUtil.to(context,  EditProfile(profile: profile));
               },
               child: SizedBox.square(
                 dimension: 35.h,

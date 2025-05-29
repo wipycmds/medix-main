@@ -94,7 +94,7 @@ class ChoosePatient extends StatelessWidget {
                     isArrowButton: true,
                     tittle: 'Continue',
                     onTap: () {
-                      NavigationUtil.to(context, const ConfirmAppointMent());
+                      // NavigationUtil.to(context, const ConfirmAppointMent());
                     }),
               )),
         ],

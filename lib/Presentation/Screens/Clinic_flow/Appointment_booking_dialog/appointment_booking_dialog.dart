@@ -74,7 +74,7 @@ class AppointmentBookingDialog extends StatelessWidget {
                 tittle: 'Book a time',
                 onTap: () {
                   Navigator.pop(context);
-                  NavigationUtil.to(context, const SelectAppointmentDate());
+                  // NavigationUtil.to(context, const SelectAppointmentDate());
                 },
                 height: 50.h,
                 style: FontStyleUtilities.h4(

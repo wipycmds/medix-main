@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'api_constants.dart';
 
 abstract class BaseApiService {
@@ -34,28 +35,42 @@ class ApiClient extends BaseApiService {
 
    @override
   dynamic post(String path, {Map<dynamic, dynamic>? params}) async {
-    // final f = getPath(path, null);
-    // debugPrint(f.toString());
-    // debugPrint(params.toString());
-
     final response = await client.post(
       getPath(path, null),
       body: jsonEncode(params),
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
-        //  HttpHeaders.acceptHeader: 'application/json',
       },
     );
-    // print('status code ${response.statusCode}'); //debugPrint(response.statusCode);
     return response;
-    
-    // if (response.statusCode == 200) {
-    //   return json.decode(response.body);
-    // } else if (response.statusCode == 401) {
-    // } else {
-    //   throw Exception(response.reasonPhrase);
-    // }
   }
+ 
+     dynamic consultationRequest(String path, {Map<dynamic, dynamic>? params}) async {
+      final token = await _getAccessToken();
+      var payload = {
+        'title': params!['title'].toString(),
+        'start': params['start'].toString(),
+        'end': params['end'].toString(),
+        'recipient_id': int.parse(params['recipient_id'].toString()),
+        'recipient_name': params['recipient_name'].toString(),
+        'provider_id': int.parse(params['provider_id'].toString()),
+        'provider_group_id': int.parse(params['provider_group_id'].toString()),
+        'provider_appointment_type_id': int.parse(params['provider_appointment_type_id'].toString()),
+        'clinic_id': int.parse(params['clinic_id'].toString()),
+      };
+
+
+      final response = await client.post(
+        getPath(path, null),
+        body: jsonEncode(payload),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.acceptHeader: 'application/json',
+          HttpHeaders.authorizationHeader: 'Bearer $token', 
+        },
+      );
+      return response;
+    }
 
   // dynamic postReg(String path, {Map<dynamic, dynamic>? params}) async {
   //   final response = await client.post(
@@ -110,6 +125,11 @@ class ApiClient extends BaseApiService {
   Uri getPath(String path, Map<dynamic, dynamic>? params) {
     return Uri.parse(ApiConstants.baseUrl + path)
         .replace(queryParameters: params?.map((key, value) => MapEntry(key.toString(), value.toString())));
+  }
+
+  Future<String?> _getAccessToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('access_token');
   }
 
 }

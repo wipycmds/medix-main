@@ -79,15 +79,15 @@ class ConsultationDoctorProfile extends StatelessWidget {
                             2.height(),
                             Row(
                               children: [
-                                Text(
-                                  doctor.specialty,
-                                  style: FontStyleUtilities.h5(
-                                          fontWeight: FWT.medium,
-                                          fontColor: isLight
-                                              ? Colors.black.withOpacity(.50)
-                                              : Colors.white)
-                                      .copyWith(fontSize: 18.sp),
-                                ),
+                                // Text(
+                                //   doctor.specialty,
+                                //   style: FontStyleUtilities.h5(
+                                //           fontWeight: FWT.medium,
+                                //           fontColor: isLight
+                                //               ? Colors.black.withOpacity(.50)
+                                //               : Colors.white)
+                                //       .copyWith(fontSize: 18.sp),
+                                // ),
                                 9.width(),
                                 // Text(
                                 //   '(4 year)',
@@ -228,10 +228,17 @@ class ConsultationDoctorProfile extends StatelessWidget {
                   child: Button(
                       tittle: 'Book Appointment',
                       onTap: () {
-                        print(doctor.id);
-                        // NavigationUtil.to(
-                        //     context, const ConsultationAppointmentData());
-                        NavigationUtil.to(context, const SelectAppointmentDate());
+                        var data = {
+                          'groupId': doctor.groupId,
+                          'doctorId': doctor.id,
+                          'clinicId': doctor.clinicId,
+                          'clinicName': doctor.clinicName,
+                          'clinicAddress': doctor.clinicAddress,
+                          'providerName': doctor.name,
+                          'speciality': doctor.specialty
+                        };
+                      
+                        NavigationUtil.to(context, SelectAppointmentDate(data:data));
                         
                       }),
                 )),

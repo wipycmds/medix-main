@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medix/Presentation/Screens/Auth/Login/get_started.dart';
 import 'package:medix/Presentation/Screens/Clinic_flow/clinic_visit/clinic_vist.dart';
 import 'package:medix/Presentation/Screens/help%20center/helpcenter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../about us/about.dart';
 import 'drawer_controller.dart';
 import 'package:medix/Utils/utils.dart';
@@ -21,11 +24,33 @@ class DrawerPage extends StatefulWidget {
 }
 
 class _DrawerPageState extends State<DrawerPage> {
+
+  Map<String, dynamic>? userData;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+
+  Future<void> _loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final raw    = prefs.getString('user_data');
+
+    if (raw != null) {
+      final Map<String, dynamic> decoded = jsonDecode(raw);
+      setState(() {
+        userData = decoded;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     final data = MediaQuery.of(context);
     final theme = Theme.of(context);
     final selectedColor = theme.primaryColor.withOpacity(.10);
+
     return DrawerWrapper<Controller>(
       controller: widget.drawerController,
       builder: (context, controller) => Drawer(
@@ -48,7 +73,7 @@ class _DrawerPageState extends State<DrawerPage> {
                     ),
                     24.height(),
                     Text(
-                      'Sandra Adams',
+                      '${userData?['first_name'] ?? ''} ${userData?['mname'] ?? ''} ${userData?['last_name'] ?? ''}',
                       style: FontStyleUtilities.h3(
                           fontWeight: FWT.medium,
                           height: 1,
@@ -59,7 +84,7 @@ class _DrawerPageState extends State<DrawerPage> {
                     SizedBox(
                       height: 24.h,
                       child: Text(
-                        'sandra_d47@gmail.com',
+                        userData?['email'] ?? '',
                         style: FontStyleUtilities.t2(
                             fontColor: theme.brightness == Brightness.light
                                 ? ColorUtil.mediumTextColor

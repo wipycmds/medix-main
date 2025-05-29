@@ -70,12 +70,12 @@ class Services extends StatelessWidget {
                 // ),
                 GestureDetector(
                   onTap: () {
-                     NavigationUtil.to(
-                        context,
-                        ConsultationSelectDoctor(),
-                      );
-                    // NavigationUtil.to(
-                    //     context, const ConsultationBookAppointment());
+                    //  NavigationUtil.to(
+                    //     context,
+                    //     ConsultationSelectDoctor(),
+                    //   );
+                    NavigationUtil.to(
+                        context, const ConsultationBookAppointment());
                     // NavigationUtil.to(
                     //     context, const BookAppointment());
                   },

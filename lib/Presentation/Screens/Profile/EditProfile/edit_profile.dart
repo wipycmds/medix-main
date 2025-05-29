@@ -8,7 +8,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../Shared/illness_tag.dart';
 
 class EditProfile extends StatefulWidget {
-  const EditProfile({Key? key}) : super(key: key);
+  final Map<String, dynamic> profile;
+
+   EditProfile({Key? key, required this.profile}) : super(key: key);
 
   @override
   State<EditProfile> createState() => _EditProfileState();
@@ -16,148 +18,124 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   late String data = '';
+ 
   @override
   Widget build(BuildContext context) {
     var isLight = Theme.of(context).brightness == Brightness.light;
+   
     return Scaffold(
       appBar: AppBar(
         elevation: 2,
         title: const Text('Edit Profile'),
         leading: const MyBackButton(),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              20.height(),
-              Text(
-                'Personal Info',
-                style: FontStyleUtilities.h4(
-                  fontWeight: FWT.bold,
-                  fontColor:
-                      isLight ? Colors.black : Colors.white.withOpacity(0.80),
-                ),
-              ),
-              18.height(),
-              CustomTextField(
-                  prefix: Padding(
-                    padding: EdgeInsets.only(right: 6.w),
-                    child: SizedBox(
-                      width: 40.w,
-                      child: NumberDropDown(onChanged: (int index) {}),
-                    ),
-                  ),
-                  hint: '000-0000-0000',
-                  onTap: () {},
-                  tittle: 'Phone Number'),
-              18.height(),
-              CustomTextField(
-                  hint: 'E.g. yourName@gmail.com',
-                  tittle: 'Email',
-                  onTap: () {}),
-              18.height(),
-              SetGender(onChanged: (value) {}),
-              18.height(),
-              CustomTextField(
-                hint: data != '' ? data : 'dd/mm/yyyy',
-                enabled: false,
-                tittle: 'Date Of Birth',
-                onTap: () async {
-                  DateTime? pickDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.utc(
-                        DateTime.now().year.toInt() - 18,
-                        DateTime.now().month,
-                        DateTime.now().day,
-                      ),
-                      firstDate: DateTime(
-                          1950), //DateTime.now() - not to allow to choose before today.
-                      lastDate: DateTime.utc(
-                        DateTime.now().year.toInt() - 18,
-                        DateTime.now().month,
-                        DateTime.now().day,
-                      ),
-                      builder: (context, child) {
-                        return Theme(
-                          data: Theme.of(context).copyWith(
-                            textButtonTheme: TextButtonThemeData(
-                              style: TextButton.styleFrom(
-                                foregroundColor: ColorUtil.primaryColor, textStyle: TextStyle(fontSize: 12.sp), // button text color
-                              ),
-                            ), dialogTheme: DialogThemeData(backgroundColor: isLight ? Colors.white : ColorUtil.scaffoldDark),
-                          ),
-                          child: child!,
-                        );
-                      });
-                  setState(() {
-                    data =
-                        '${pickDate?.day}/${pickDate?.month}/${pickDate?.year}';
-                  });
-                                },
-                suffix: Icon(
-                  CupertinoIcons.calendar,
-                  color: isLight
-                      ? ColorUtil.baseTextColor
-                      : Colors.white.withOpacity(0.80),
-                ),
-              ),
-              20.height(),
-              Text(
-                'Medical Info',
-                style: FontStyleUtilities.h4(
-                  fontWeight: FWT.bold,
-                  fontColor:
-                      isLight ? Colors.black : Colors.white.withOpacity(0.60),
-                ),
-              ),
-              18.height(),
-              CustomTextField(
-                hint: 'E.g.Asthma',
-                tittle: 'Illness',
-                bottom: Wrap(
-                  spacing: 6.w,
-                  runSpacing: 8.w,
+      body: widget.profile.isNotEmpty
+          ? SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    'Migraine',
-                    'Asthma',
-                    'Low Blood Sugar',
-                    'Diabetes',
-                    'Kidney Stone',
-                  ].map((e) => IllnessTag(value: e)).toList(),
+                    20.height(),
+                    Text(
+                      'Personal Info',
+                      style: FontStyleUtilities.h4(
+                        fontWeight: FWT.bold,
+                        fontColor: isLight ? Colors.black : Colors.white.withOpacity(0.80),
+                      ),
+                    ),
+                    18.height(),
+                    CustomTextField(
+                      prefix: Padding(
+                        padding: EdgeInsets.only(right: 6.w),
+                        child: SizedBox(
+                          width: 40.w,
+                          child: NumberDropDown(onChanged: (int index) {}),
+                        ),
+                      ),
+                      hint: '000-0000-0000',
+                      onTap: () {},
+                      tittle: 'Phone Number',
+                      controller: TextEditingController(text: widget.profile['mobile_number'] ?? ''),
+                    ),
+                    18.height(),
+                    CustomTextField(
+                      hint: 'E.g. yourName@gmail.com',
+                      tittle: 'Email',
+                      controller: TextEditingController(text: widget.profile['email'] ?? ''),
+                      onTap: () {},
+                    ),
+                    18.height(),
+                    SetGender(onChanged: (value) {}),
+                    18.height(),
+                    CustomTextField(
+                      hint: data != '' ? data : 'dd/mm/yyyy',
+                      enabled: false,
+                      tittle: 'Date Of Birth',
+                      controller: TextEditingController(text: widget.profile['dob'] ?? ''),
+                      onTap: () async {
+                        DateTime? pickDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.utc(
+                            DateTime.now().year.toInt() - 18,
+                            DateTime.now().month,
+                            DateTime.now().day,
+                          ),
+                          firstDate: DateTime(1950),
+                          lastDate: DateTime.utc(
+                            DateTime.now().year.toInt() - 18,
+                            DateTime.now().month,
+                            DateTime.now().day,
+                          ),
+                          builder: (context, child) {
+                            return Theme(
+                              data: Theme.of(context).copyWith(
+                                textButtonTheme: TextButtonThemeData(
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: ColorUtil.primaryColor,
+                                    textStyle: TextStyle(fontSize: 12.sp),
+                                  ),
+                                ),
+                                dialogTheme: DialogTheme(
+                                  backgroundColor: isLight ? Colors.white : ColorUtil.scaffoldDark,
+                                ),
+                              ),
+                              child: child!,
+                            );
+                          },
+                        );
+                        setState(() {
+                          data = '${pickDate?.day}/${pickDate?.month}/${pickDate?.year}';
+                        });
+                      },
+                      suffix: Icon(
+                        CupertinoIcons.calendar,
+                        color: isLight ? ColorUtil.baseTextColor : Colors.white.withOpacity(0.80),
+                      ),
+                    ),
+                    20.height(),
+                    CustomTextField(
+                      prefix: Padding(
+                        padding: EdgeInsets.only(right: 6.w),
+                        child: SizedBox(
+                          width: 40.w,
+                          child: NumberDropDown(onChanged: (int index) {}),
+                        ),
+                      ),
+                      hint: '000-0000-0000',
+                      tittle: 'Emergency Number',
+                      controller: TextEditingController(text: widget.profile['emergency_contact_number'] ?? ''),
+                      onTap: () {},
+                    ),
+                    18.height(),
+                    18.height(),
+                    18.height(),
+                    36.height(),
+                  ],
                 ),
-                onTap: () {},
               ),
-              18.height(),
-              CustomTextField(
-                  suffix: Icon(
-                    Icons.attachment,
-                    color: isLight
-                        ? ColorUtil.baseTextColor
-                        : Colors.white.withOpacity(0.60),
-                  ),
-                  hint: 'Pdf or Doc files are allowed',
-                  onTap: () {},
-                  tittle: 'Upload Your Medical Report'),
-              18.height(),
-              CustomTextField(
-                prefix: Padding(
-                  padding: EdgeInsets.only(right: 6.w),
-                  child: SizedBox(
-                    width: 40.w,
-                    child: NumberDropDown(onChanged: (int index) {}),
-                  ),
-                ),
-                hint: '000-0000-0000',
-                tittle: 'Emergency Number',
-                onTap: () {},
-              ),
-              36.height()
-            ],
-          ),
-        ),
-      ),
+            )
+          : Center(child: CircularProgressIndicator()),
     );
   }
 }

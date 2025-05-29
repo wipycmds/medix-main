@@ -22,6 +22,7 @@ class ClinicVisitCardModel {
   const ClinicVisitCardModel({
     required this.id,
     required this.name,
+
     // this.deletedAt,
     // this.parentId,
   });
@@ -32,9 +33,13 @@ class ClinicVisitCardModel {
   // final int? parentId;
 
   factory ClinicVisitCardModel.fromMap(Map<String, dynamic> map) {
+    // print(map);
     return ClinicVisitCardModel(
+
       id: map['id'] as int,
-      name: map['name'] as String,
+      name: (map['name'] as String?)?.isNotEmpty == true ? map['name'] as String : '',
+    
+      // name: map['name'] !as String,
       // deletedAt: map['deleted_at'] != null ? DateTime.tryParse(map['deleted_at']) : null,
       // parentId: map['parent_id'],
     );

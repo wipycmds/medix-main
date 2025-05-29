@@ -22,12 +22,13 @@ class DoctorModel {
     required this.image,
     required this.degree,
     required this.reviews,
-    required this.experience, required this.specialty, 
+    required this.experience, required this.specialty, required this.groupId, required this.clinicId, required this.clinicName, required String this.clinicAddress, 
+    // required this.groupId, 
     
   });
 
-  final String name, image, degree, about, specialty;
-  final int reviews, patient, id;
+  final String name, image, degree, about, specialty, clinicName, clinicAddress;
+  final int reviews, patient, id, groupId, clinicId;
   final double experience, averageRating;
 
   // static Future<List<DoctorModel>> fromJson(json) {

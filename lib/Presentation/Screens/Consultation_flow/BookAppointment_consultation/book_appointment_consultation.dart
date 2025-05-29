@@ -31,32 +31,54 @@ class _ConsultationBookAppointmentState extends State<ConsultationBookAppointmen
   @override
   void initState() {
     super.initState();
-    _fetchData();
+    _fetchGroups();
   }
 
-  Future<void> _fetchData() async {
+  Future<void> _fetchGroups() async {
     final apiClient = ApiClient(http.Client());
-    try {
-      final response = await apiClient.get('auth/apps/provider/preferences');
-      if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
 
-        if (responseData is Map<String, dynamic>) {
-          final data = responseData['data'];
-          if (data is Map<String, dynamic>) {
-         
-            final specialties = data['specialties'];
-            final services = data['services'];
-            if (specialties is List) {
-              setState(() {
-                dataService = List<Map<String, dynamic>>.from(specialties);
+    try {
+      final response = await apiClient.get('auth/apps/provider/group');
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        final groupList = responseData['group'];
+     
+
+        if (groupList is List) {
+          final normalizedList = <Map<String, dynamic>>[];
+
+          for (final group in groupList) {
+            final groupId = group['id'];
+            final groupName = group['name'];
+            final providers = group['providers'] as List<dynamic>? ?? [];
+
+            for (final provider in providers) {
+              final providerGroupId = provider['group_id'];
+              final user = provider['user'] ?? {};
+
+              String displayName;
+
+              if (groupId == providerGroupId) {
+                final fname = user['fname'] ?? '';
+                final mname = user['mname'] ?? '';
+                final lname = user['lname'] ?? '';
+                displayName = "$fname $mname $lname".trim();
+              } else {
+                displayName = groupName ?? 'Unnamed Group';
+              }
+
+              normalizedList.add({
+                'id': groupId,
+                'name': displayName,
               });
-            } else {
-              print("Expected 'specialties' to be a List, got: ${specialties.runtimeType}");
             }
-          } else {
-            print("Expected 'data' to be a Map, got: ${data.runtimeType}");
           }
+
+          setState(() {
+            dataService = normalizedList;
+          });
+        } else {
+          print("Expected 'group' to be a List, got: ${groupList.runtimeType}");
         }
       } else {
         print('Failed to fetch data: ${response.statusCode}');
@@ -65,6 +87,9 @@ class _ConsultationBookAppointmentState extends State<ConsultationBookAppointmen
       print("Error fetching data: $e");
     }
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -118,27 +143,47 @@ class _ConsultationBookAppointmentState extends State<ConsultationBookAppointmen
 
                 /// You can use the fetched dataService here or update your ViewModel accordingly.
                 /// For example, if you want to display them in a list:
+                // SliverList(
+                //   delegate: SliverChildBuilderDelegate(
+                //     (context, index) {
+                //       final item = index < dataService.length ? dataService[index] : null;
+                //       if (item == null) return const SizedBox.shrink();
+
+
+                //     final clinicModel = ClinicVisitCardModel.fromMap(item);
+
+                //       return ClinicVisitCard(                       
+                //         selected: model.checkIfSelected(clinicModel),
+                //             onTap: () {
+                //               model.chooseClinic(clinicModel, index);
+                //             },
+                //         info: clinicModel,
+
+                //       );
+                //     },
+                //     childCount: dataService.length,
+                //   ),
+                // ),
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       final item = index < dataService.length ? dataService[index] : null;
                       if (item == null) return const SizedBox.shrink();
 
+                      final clinicModel = ClinicVisitCardModel.fromMap(item);
 
-                    final clinicModel = ClinicVisitCardModel.fromMap(item);
-
-                      return ClinicVisitCard(                       
+                      return ClinicVisitCard(
                         selected: model.checkIfSelected(clinicModel),
-                            onTap: () {
-                              model.chooseClinic(clinicModel, index);
-                            },
+                        onTap: () {
+                          model.chooseClinic(clinicModel, index);
+                        },
                         info: clinicModel,
-
                       );
                     },
                     childCount: dataService.length,
                   ),
                 ),
+
 
                 SliverSizedBox(height: 115.h),
               ],
@@ -152,13 +197,13 @@ class _ConsultationBookAppointmentState extends State<ConsultationBookAppointmen
                   isArrowButton: true,
                   tittle: 'Continue',
                   onTap: () {
+                 
                     if (model.selectedServiceId != null) {
-                      // NavigationUtil.to(
-                      //   context,
-                      //   ConsultationSelectDoctor(servicesId: model.selectedServiceId!),
-                      // );
+                      NavigationUtil.to(
+                        context,
+                        ConsultationSelectDoctor(servicesId: model.selectedServiceId!),
+                      );
                     } else {
-                      // Optional: show warning if no clinic selected
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text("Please select a Service first")),
                       );
