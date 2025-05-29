@@ -25,7 +25,7 @@ final Map<String, Object?> data;
 
 class _SelectAppointmentDateState extends State<SelectAppointmentDate> {
   DateTime? _selectedDateTime;
-  String _selectedType = 'Current'; // default value
+  final String _selectedType = 'Current'; // default value
 
   List<Map<String, dynamic>> _appointmentTypesList = [];
 

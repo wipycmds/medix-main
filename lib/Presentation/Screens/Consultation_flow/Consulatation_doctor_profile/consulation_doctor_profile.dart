@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:medix/Data/Model/Home/doctor.dart';
-import 'package:medix/Presentation/Screens/Consultation_flow/Consultation_appointment_data/consulation_appointment_data.dart';
 import 'package:medix/Presentation/Screens/Select_Appoinment_Date/appointment_date.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:medix/Extensions/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../Flow_widgets/specialist_tag.dart';
 
 class ConsultationDoctorProfile extends StatelessWidget {
   final DoctorModel doctor;

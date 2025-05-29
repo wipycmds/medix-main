@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medix/Extensions/white_space_extension.dart';
 import 'package:medix/Presentation/Screens/Clinic_flow/Payment_method/payment_method.dart';
-import 'package:medix/Presentation/Screens/Main/Home/Compo/bottomnav.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

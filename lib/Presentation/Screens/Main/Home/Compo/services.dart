@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medix/Presentation/Screens/Clinic_flow/clinic_visit/clinic_vist.dart';
 import 'package:medix/Presentation/Screens/Consultation_flow/BookAppointment_consultation/book_appointment_consultation.dart';
-import 'package:medix/Presentation/Screens/Consultation_flow/Consultation_doctors/select_doctor_consultation.dart';
-import 'package:medix/Presentation/Screens/Main/Home/Compo/bottomnav.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

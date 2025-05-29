@@ -3,15 +3,11 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medix/Presentation/Screens/Auth/Login/get_started.dart';
-import 'package:medix/Presentation/Screens/Clinic_flow/clinic_visit/clinic_vist.dart';
-import 'package:medix/Presentation/Screens/help%20center/helpcenter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../about us/about.dart';
 import 'drawer_controller.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Extensions/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../MyAppointment/my_appointment.dart';
 
 class DrawerPage extends StatefulWidget {
   const DrawerPage({

@@ -22,7 +22,7 @@ class DoctorModel {
     required this.image,
     required this.degree,
     required this.reviews,
-    required this.experience, required this.specialty, required this.groupId, required this.clinicId, required this.clinicName, required String this.clinicAddress, 
+    required this.experience, required this.specialty, required this.groupId, required this.clinicId, required this.clinicName, required this.clinicAddress, 
     // required this.groupId, 
     
   });

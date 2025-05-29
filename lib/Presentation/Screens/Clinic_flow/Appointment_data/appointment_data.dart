@@ -5,7 +5,6 @@ import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:medix/Extensions/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../Flow_widgets/select_blood_group.dart';
-import '../../Flow_widgets/select_gender.dart';
 
 class AppointmentData extends StatefulWidget {
   const AppointmentData({Key? key}) : super(key: key);

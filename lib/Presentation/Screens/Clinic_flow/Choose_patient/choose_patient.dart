@@ -3,7 +3,6 @@ import 'package:medix/Data/Fake_data/Patients/patients.dart';
 import 'package:medix/Data/Model/Add_patient/patient_model.dart';
 import 'package:medix/Extensions/white_space_extension.dart';
 import 'package:medix/Presentation/Screens/Clinic_flow/Add_dependent/add_dependent.dart';
-import 'package:medix/Presentation/Screens/Clinic_flow/Confirm_appointment/confrim_appointment.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

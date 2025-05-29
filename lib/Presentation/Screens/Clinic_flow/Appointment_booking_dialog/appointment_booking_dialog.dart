@@ -4,7 +4,6 @@ import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:medix/Extensions/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../Select_Appoinment_Date/appointment_date.dart';
 import '../Select_doctor/doctor_list.dart';
 
 class AppointmentBookingDialog extends StatelessWidget {

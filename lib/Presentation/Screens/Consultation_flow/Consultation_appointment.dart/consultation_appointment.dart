@@ -11,7 +11,6 @@ import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medix/package/filter_controller.dart';
-import 'components/schedule_tile_wrapper.dart';
 
 class ConsultationAppointment extends StatefulWidget {
   const ConsultationAppointment({Key? key}) : super(key: key);

@@ -10,7 +10,7 @@ import '../Shared/illness_tag.dart';
 class EditProfile extends StatefulWidget {
   final Map<String, dynamic> profile;
 
-   EditProfile({Key? key, required this.profile}) : super(key: key);
+   const EditProfile({Key? key, required this.profile}) : super(key: key);
 
   @override
   State<EditProfile> createState() => _EditProfileState();

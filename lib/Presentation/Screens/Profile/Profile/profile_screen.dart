@@ -10,7 +10,6 @@ import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:medix/Extensions/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../Shared/illness_tag.dart';
 class ProfileScreen extends StatefulWidget {
 
 const ProfileScreen({Key? key}) : super(key: key);

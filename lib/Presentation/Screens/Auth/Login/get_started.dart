@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'package:medix/Data/Core/api_client.dart';
 import 'package:medix/Presentation/Screens/Auth/Otp/signup_otp_verification.dart';
 import 'package:medix/Presentation/Screens/Main/Home/Compo/bottomnav.dart';
-import 'package:medix/Presentation/Screens/Profile/Drawer/drawer_controller.dart';
 import 'package:medix/Presentation/Screens/Profile/EditProfile/edit_profile.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';

@@ -1,15 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:medix/Presentation/Screens/Consultation_flow/Consultation_appointment.dart/consultation_appointment.dart';
-import 'package:medix/Presentation/Screens/Select_Appoinment_Date/appointment_date.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:medix/Extensions/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Flow_widgets/select_gender.dart';
-import '../../Flow_widgets/select_blood_group.dart';
 
 class ConsultationAppointmentData extends StatefulWidget {
   const ConsultationAppointmentData({Key? key}) : super(key: key);

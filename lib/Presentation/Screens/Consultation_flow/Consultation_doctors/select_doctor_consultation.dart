@@ -11,8 +11,6 @@ import 'package:medix/Utils/utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stacked/stacked.dart';
 //
-import 'package:medix/Data/Fake_data/Home/doctors.dart';
-import 'package:medix/Data/Fake_data/Clinic_visit/clinic_visits.dart';
 import 'select_doctor_consultation_view_model.dart';
 //
 import '../Shared/app_bar.dart' as bar;

@@ -14,7 +14,6 @@ import '../Shared/app_bar.dart' as bar;
 import '../../Flow_widgets/clinic_card.dart';
 
 import 'package:medix/Presentation/Screens/Consultation_flow/BookAppointment_consultation/book_appointment_consultation_view_model.dart';
-import 'package:medix/Data/Fake_data/Clinic_visit/clinic_visits.dart';
 
 class ConsultationBookAppointment extends StatefulWidget {
   const ConsultationBookAppointment({Key? key}) : super(key: key);

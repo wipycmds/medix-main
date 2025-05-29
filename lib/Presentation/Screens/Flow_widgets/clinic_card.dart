@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:medix/Data/Model/Clinic/clinic_visit_card.dart';
 import 'package:medix/Extensions/text_trimming_extension.dart';
 import 'package:medix/Utils/utils.dart';
-import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ClinicVisitCard extends StatelessWidget {
