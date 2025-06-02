@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medix/Presentation/Screens/Clinic_flow/clinic_visit/clinic_vist.dart';
 import 'package:medix/Presentation/Screens/Consultation_flow/BookAppointment_consultation/book_appointment_consultation.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
@@ -32,22 +33,22 @@ class Services extends StatelessWidget {
                       .copyWith(fontSize: 19.sp),
                 ),
                 const Spacer(),
-                Text(
-                  'View all  ',
-                  style: FontStyleUtilities.h6(
-                      fontWeight: FWT.regular,
-                      fontColor:
-                          Theme.of(context).brightness == Brightness.light
-                              ? Colors.black.withOpacity(.50)
-                              : Colors.white),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 4.h),
-                  child: SvgIcon(
-                    'assets/Icons/arrow_right.svg',
-                    color: isLight ? null : ColorUtil.surfaceLight,
-                  ),
-                )
+                // Text(
+                //   'View all  ',
+                //   style: FontStyleUtilities.h6(
+                //       fontWeight: FWT.regular,
+                //       fontColor:
+                //           Theme.of(context).brightness == Brightness.light
+                //               ? Colors.black.withOpacity(.50)
+                //               : Colors.white),
+                // ),
+                // Padding(
+                //   padding: EdgeInsets.only(top: 4.h),
+                //   child: SvgIcon(
+                //     'assets/Icons/arrow_right.svg',
+                //     color: isLight ? null : ColorUtil.surfaceLight,
+                //   ),
+                // )
               ],
             ),
           ),
@@ -58,13 +59,13 @@ class Services extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               children: [
                 SizedBox(width: 20.w),
-                // GestureDetector(
-                //   onTap: () {
-                //     NavigationUtil.to(context, ClinicVisit());
-                //   },
-                //   child: const ServiceCard(
-                //       icon: 'assets/Icons/visit.svg', text: 'Clinic visit'),
-                // ),
+                GestureDetector(
+                  onTap: () {
+                    NavigationUtil.to(context, ClinicVisit());
+                  },
+                  child: const ServiceCard(
+                      icon: 'assets/Icons/visit.svg', text: 'Clinic visit'),
+                ),
                 GestureDetector(
                   onTap: () {
                     //  NavigationUtil.to(

@@ -128,40 +128,40 @@ class _HomeState extends State<Home> {
               ),
               SizedBox(width: 20.w)
             ]),
-        MyStickyHeader(
-          pinned: true,
-          expandedHeight: 72.h,
-          height: 72.h,
-          elevation: 3,
-          child: Padding(
-              padding: EdgeInsets.only(
-                  left: 20.w, right: 20.w, top: 8.h, bottom: 12.h),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: GestureDetector(
-                    onTap: () {
-                      NavigationUtil.to(context, const SearchScreen());
-                    },
-                    child: AbsorbPointer(
-                      absorbing: true,
-                      child: HomeTextField(
-                          prefix: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 15.h, horizontal: 11.42.w),
-                              child: SvgIcon(
-                                'assets/Icons/Search.svg',
-                                color: isLight
-                                    ? Colors.black.withOpacity(.30)
-                                    : ColorUtil.mediumTextColor,
-                              )),
-                          hint: 'Search'),
-                    ),
-                  )),
-                ],
-              )),
-        ),
-        SliverSizedBox(height: 10.h),
+        // MyStickyHeader(
+        //   pinned: true,
+        //   expandedHeight: 72.h,
+        //   height: 72.h,
+        //   elevation: 3,
+        //   child: Padding(
+        //       padding: EdgeInsets.only(
+        //           left: 20.w, right: 20.w, top: 8.h, bottom: 12.h),
+        //       child: Row(
+        //         children: [
+        //           Expanded(
+        //               child: GestureDetector(
+        //             onTap: () {
+        //               NavigationUtil.to(context, const SearchScreen());
+        //             },
+        //             child: AbsorbPointer(
+        //               absorbing: true,
+        //               child: HomeTextField(
+        //                   prefix: Padding(
+        //                       padding: EdgeInsets.symmetric(
+        //                           vertical: 15.h, horizontal: 11.42.w),
+        //                       child: SvgIcon(
+        //                         'assets/Icons/Search.svg',
+        //                         color: isLight
+        //                             ? Colors.black.withOpacity(.30)
+        //                             : ColorUtil.mediumTextColor,
+        //                       )),
+        //                   hint: 'Search'),
+        //             ),
+        //           )),
+        //         ],
+        //       )),
+        // ),
+        SliverSizedBox(height: 30.h),
         const Services(),
         SliverSizedBox(height: 29.h),
         // Pharmacy(onTap: (PharmacyModel value) {}),

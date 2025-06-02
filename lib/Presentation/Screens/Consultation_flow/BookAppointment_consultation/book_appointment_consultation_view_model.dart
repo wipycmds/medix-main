@@ -56,11 +56,13 @@ class ConsulTationAppointmentViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  bool checkIfSelected(ClinicVisitCardModel clinic) {
-    return _selectedClinic?.id == clinic.id;
-  }
+  // bool checkIfSelected(ClinicVisitCardModel clinic) {
+  //   return _selectedClinic?.id == clinic.id;
+  // }
 
-  int? get selectedServiceId => _selectedClinic?.id;
+  // int? get selectedServiceId => _selectedClinic?.id;
+  // String? get selectedTag => _selectedClinic?.tag;
+
 
   // --- Doctor Selection ---
   DoctorModel? _selectedDoctor;

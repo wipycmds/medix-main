@@ -216,11 +216,11 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                NavigationUtil.to(context, SelectPaymentMethod(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                ));
+                                // NavigationUtil.to(context, SelectPaymentMethod(
+                                //   onTap: () {
+                                //     Navigator.pop(context);
+                                //   },
+                                // ));
                               },
                               child: RowWrapper(
                                 leading: const SvgIcon('assets/Icons/Plus.svg'),
@@ -233,12 +233,12 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
                                         : Colors.white),
                                 isleading: true,
                                 onTap: () {
-                                  NavigationUtil.to(context,
-                                      SelectPaymentMethod(
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ));
+                                  // NavigationUtil.to(context,
+                                  //     SelectPaymentMethod(
+                                  //   onTap: () {
+                                  //     Navigator.pop(context);
+                                  //   },
+                                  // ));
                                 },
                                 textRightStyle: FontStyleUtilities.t2(
                                     fontWeight: FWT.semiBold,

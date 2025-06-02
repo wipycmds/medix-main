@@ -128,12 +128,10 @@ class ConfirmConsultation extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 30.h),
               child:
                   Button(isArrowButton: true, tittle: 'Continue', onTap: () {
-                   NavigationUtil.to(context,
-                      SelectPaymentMethod(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ));
+                  //  NavigationUtil.to(context,
+                  //     SelectPaymentMethod(
+                    
+                  // ));
                   }),
             )),
       ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:medix/Data/Model/Clinic/clinic_visit_card.dart';
+
+import 'package:medix/Data/Model/Clinic/clinic_visits_card.dart';
 import 'package:medix/Extensions/text_trimming_extension.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,14 +14,14 @@ class ClinicVisitCard extends StatelessWidget {
   }) : super(key: key);
   final bool? selected;
   final VoidCallback onTap;
-  final ClinicVisitCardModel info;
+  final ClinicVisitsCardModel info;
   @override
   Widget build(BuildContext context) {
     var isLight = Theme.of(context).brightness == Brightness.light;
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 60.h,
+        height: 105.h,
         margin: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0),
         decoration: BoxDecoration(
             border: selected!
@@ -30,17 +31,17 @@ class ClinicVisitCard extends StatelessWidget {
             color: isLight ? Colors.white : ColorUtil.surfaceDark),
         child: Row(
           children: [
-            // SizedBox(
-            //   width: 129.w,
-            //   child: ClipRRect(
-            //       borderRadius: BorderRadius.only(
-            //           topLeft: Radius.circular(15.r),
-            //           bottomLeft: Radius.circular(15.r)),
-            //       child: Image.asset(
-            //         info.image,
-            //         fit: BoxFit.cover,
-            //       )),
-            // ),
+            SizedBox(
+              width: 120.w,
+              child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15.r),
+                      bottomLeft: Radius.circular(15.r)),
+                  child: Image.asset(
+                    'assets/Images/Temp/doctor_1.png',
+                    fit: BoxFit.cover,
+                  )),
+            ),
             Expanded(
               child: Padding(
                   padding: EdgeInsets.only(
@@ -56,21 +57,21 @@ class ClinicVisitCard extends StatelessWidget {
                               .copyWith(fontSize: 20),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2),
-                      // Text(
-                      //   "${info.hospitalCount} Doctors",
-                      //   style: FontStyleUtilities.h6(
-                      //       fontWeight: FWT.medium,
-                      //       fontColor: isLight
-                      //           ? Colors.black.withOpacity(.50)
-                      //           : Colors.white),
-                      // ),
-                      // SizedBox(height: 6.h),
-                      // Text('\$${info.lowestCharge}-\$${info.highestCharge}',
-                      //     style: FontStyleUtilities.h6(
-                      //             fontWeight: FWT.medium,
-                      //             fontColor: ColorUtil.primaryColor)
-                      //         .copyWith(fontWeight: FontWeight.w600)),
-                      SizedBox(height: 8.h),
+                      Text(
+                        ' Doctor',
+                        style: FontStyleUtilities.h6(
+                            fontWeight: FWT.medium,
+                            fontColor: isLight
+                                ? Colors.black.withOpacity(.50)
+                                : Colors.white),
+                      ),
+                      SizedBox(height: 3.h),
+                      Text('100+ Patients',
+                          style: FontStyleUtilities.h6(
+                                  fontWeight: FWT.medium,
+                                  fontColor: ColorUtil.primaryColor)
+                              .copyWith(fontWeight: FontWeight.w600)),
+                      SizedBox(height: 3.h),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -94,6 +95,7 @@ class ClinicVisitCard extends StatelessWidget {
                           //           ? const Color(0xff454545).withOpacity(.80)
                           //           : Colors.white.withOpacity(.70)),
                           // ),
+                          SizedBox(width: 5.w)
                         ],
                       )
                     ],

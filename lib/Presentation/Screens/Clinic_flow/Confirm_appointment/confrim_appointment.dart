@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:medix/Data/Core/api_client.dart';
 import 'package:medix/Extensions/white_space_extension.dart';
+import 'package:medix/Presentation/Screens/Clinic_flow/Payment_method/payment_method.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -153,55 +154,58 @@ class _ConfirmAppointMentState extends State<ConfirmAppointMent> {
                   isArrowButton: true,
                   tittle: 'Continue',
                   onTap: () {
-                
-                    consultationRequest(context, widget.data);
+                    NavigationUtil.to(context,
+                      SelectPaymentMethod(patientData: widget.data)
+                    );
+
+                    // consultationRequest(context, widget.data);
                     // NavigationUtil.to(context, const AddVoucher());
                   }),
             )),
       ],
     ));
   }
-  
-Future<void> consultationRequest(BuildContext context, Map<String, dynamic> data) async {
-  final apiClient = ApiClient(http.Client()); // Or however you initialize it
-
-   String formatDateTimeToBackend(DateTime dt) =>
-    dt.toString().substring(0, 16).replaceFirst('T', ' ');
-
-  final convertedData = {
-    ...data,
-    'start': data['start'] is DateTime ? formatDateTimeToBackend(data['start']) : data['start'],
-    'end': data['end'] is DateTime ? formatDateTimeToBackend(data['end']) : data['end'],
-  };
-
-
-
-  try {
-    final response = await apiClient.consultationRequest(
-      'patient-consult-request',
-      params: convertedData,
-    );
-
-
-    if (response.statusCode == 201) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Consultation request submitted successfully')),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to submit request: ${response.statusCode}')),
-      );
-    }
-  } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('An error occurred: $e')),
-    );
-  } finally {
-    apiClient.client.close(); // Don't forget to close the client
-  }
 }
+// Future<void> consultationRequest(BuildContext context, Map<String, dynamic> data) async {
+//   final apiClient = ApiClient(http.Client()); // Or however you initialize it
 
- void _showErrorSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
-  }
-}
+//    String formatDateTimeToBackend(DateTime dt) =>
+//     dt.toString().substring(0, 16).replaceFirst('T', ' ');
+
+//   final convertedData = {
+//     ...data,
+//     'start': data['start'] is DateTime ? formatDateTimeToBackend(data['start']) : data['start'],
+//     'end': data['end'] is DateTime ? formatDateTimeToBackend(data['end']) : data['end'],
+//   };
+
+
+
+//   try {
+//     final response = await apiClient.consultationRequest(
+//       'patient-consult-request',
+//       params: convertedData,
+//     );
+
+
+//     if (response.statusCode == 201) {
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(content: Text('Consultation request submitted successfully')),
+//       );
+//     } else {
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(content: Text('Failed to submit request: ${response.statusCode}')),
+//       );
+//     }
+//   } catch (e) {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(content: Text('An error occurred: $e')),
+//     );
+//   } finally {
+//     apiClient.client.close(); // Don't forget to close the client
+//   }
+// }
+
+//  void _showErrorSnackBar(String message) {
+//     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+//   }
+// }

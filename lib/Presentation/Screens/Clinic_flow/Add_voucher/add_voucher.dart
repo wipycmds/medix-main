@@ -44,8 +44,8 @@ class AddVoucher extends StatelessWidget {
                             InkWell(
                               onTap: onTap ??
                                   () {
-                                    NavigationUtil.to(
-                                        context, const SelectPaymentMethod());
+                                    // NavigationUtil.to(
+                                    //     context, const SelectPaymentMethod());
                                   },
                               child: Text(
                                 'Skip',
@@ -104,8 +104,8 @@ class AddVoucher extends StatelessWidget {
                     tittle: 'Add Voucher',
                     onTap: onTap ??
                         () {
-                          NavigationUtil.to(
-                              context, const SelectPaymentMethod());
+                          // NavigationUtil.to(
+                          //     context, const SelectPaymentMethod());
                         }),
               )),
         ],

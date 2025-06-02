@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medix/Presentation/Screens/Auth/Login/get_started.dart';
+import 'package:medix/Presentation/Screens/Clinic_flow/clinic_visit/clinic_vist.dart';
+import 'package:medix/Presentation/Screens/Profile/MyAppointment/my_appointment.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'drawer_controller.dart';
 import 'package:medix/Utils/utils.dart';
@@ -102,23 +104,23 @@ class _DrawerPageState extends State<DrawerPage> {
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  // DrawerTile(
-                  //     isSelected: controller.index == 0,
-                  //     onTap: () {
-                  //       selectDestination(0);
-                  //       NavigationUtil.to(context, const MyAppointmentScreen());
-                  //     },
-                  //     leading: Icons.meeting_room_outlined,
-                  //     tittle: 'My Activity'),
-                  // 12.height(),
-                  // DrawerTile(
-                  //     isSelected: controller.index == 1,
-                  //     onTap: () {
-                  //       selectDestination(1);
-                  //       NavigationUtil.to(context, ClinicVisit());
-                  //     },
-                  //     leading: Icons.update,
-                  //     tittle: 'Schedule Appointment'),
+                  DrawerTile(
+                      isSelected: controller.index == 0,
+                      onTap: () {
+                        selectDestination(0);
+                        NavigationUtil.to(context, const MyAppointmentScreen());
+                      },
+                      leading: Icons.meeting_room_outlined,
+                      tittle: 'My Activity'),
+                  12.height(),
+                  DrawerTile(
+                      isSelected: controller.index == 1,
+                      onTap: () {
+                        selectDestination(1);
+                        NavigationUtil.to(context, ClinicVisit());
+                      },
+                      leading: Icons.update,
+                      tittle: 'Schedule Appointment'),
                 ],
               ),
             ),

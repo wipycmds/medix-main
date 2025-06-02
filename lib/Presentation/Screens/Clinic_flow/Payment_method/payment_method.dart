@@ -8,7 +8,8 @@ import 'package:medix/Extensions/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SelectPaymentMethod extends StatelessWidget {
-  const SelectPaymentMethod({Key? key, this.onTap}) : super(key: key);
+   final Map<String, dynamic> patientData;
+  const SelectPaymentMethod({Key? key, this.onTap, required this.patientData}) : super(key: key);
 
   final VoidCallback? onTap;
   @override
@@ -124,15 +125,20 @@ class SelectPaymentMethod extends StatelessWidget {
                     tittle: 'Save',
                     onTap: onTap ??
                         () {
-                          showDialog(
-                              context: context,
-                              builder: (context) =>
-                                  AppointmentConfirmDialog(isLight: isLight));
+                          consultationRequest(context, patientData);
+                          // showDialog(
+                          //     context: context,
+                          //     builder: (context) =>
+                          //         AppointmentConfirmDialog(isLight: isLight));
                         }),
               )),
         ],
       ),
     );
+  }
+  
+  void consultationRequest(BuildContext context, patientData) {
+    print(patientData);
   }
 }
 

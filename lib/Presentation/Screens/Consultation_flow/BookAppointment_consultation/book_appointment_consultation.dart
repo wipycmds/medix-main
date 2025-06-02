@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:medix/Data/Core/api_client.dart'; // Your ApiClient import
 import 'package:medix/Data/Model/Clinic/clinic_visit_card.dart';
+import 'package:medix/Presentation/Screens/Consultation_flow/Consulatation_doctor_profile/consulation_doctor_profile.dart';
 
 import 'package:medix/Presentation/Screens/Consultation_flow/Consultation_doctors/select_doctor_consultation.dart';
 import 'package:medix/Utils/utils.dart';
@@ -38,13 +39,30 @@ class _ConsultationBookAppointmentState extends State<ConsultationBookAppointmen
 
     try {
       final response = await apiClient.get('auth/apps/provider/group');
+     
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         final groupList = responseData['group'];
-     
-
         if (groupList is List) {
           final normalizedList = <Map<String, dynamic>>[];
+
+          var groupCount = <int, int>{};
+
+          for (final group in groupList) {
+            final groupId = group['id'];
+            final groupName = group['name'];
+            final providers = group['providers'] as List<dynamic>? ?? [];
+
+            for (final provider in providers) {
+              final providerGroupId = provider['group_id'];
+
+              if (groupId == providerGroupId) {
+                // print(groupCount[groupId] ?? 0); // Print the count for each groupId)
+                groupCount[groupId] = (groupCount[groupId] ?? 0) + 1;
+
+              }
+            }
+          }
 
           for (final group in groupList) {
             final groupId = group['id'];
@@ -62,14 +80,21 @@ class _ConsultationBookAppointmentState extends State<ConsultationBookAppointmen
                 final mname = user['mname'] ?? '';
                 final lname = user['lname'] ?? '';
                 displayName = "$fname $mname $lname".trim();
+                normalizedList.add({
+                  'id': groupId,
+                  'name': displayName,
+                  'tag': 'Personal',
+                  'count': groupCount[groupId] ?? 0,
+                });
               } else {
                 displayName = groupName ?? 'Unnamed Group';
+                normalizedList.add({
+                  'id': groupId,
+                  'name': displayName,
+                  'tag': 'Group',
+                  'count': groupCount[groupId] ?? 0,
+                });
               }
-
-              normalizedList.add({
-                'id': groupId,
-                'name': displayName,
-              });
             }
           }
 
@@ -120,25 +145,25 @@ class _ConsultationBookAppointmentState extends State<ConsultationBookAppointmen
                             //     fontColor: isLight ? Colors.black : Colors.white,
                             //   ),
                             // ),
-                            Text(
-                              'Find the service you are ',
-                              style: FontStyleUtilities.h6(
-                                fontWeight: FWT.medium,
-                                fontColor: isLight ? const Color(0xffB9B9B9) : Colors.white,
-                              ),
-                            ),
+                            // Text(
+                            //   'Find the service you are ',
+                            //   style: FontStyleUtilities.h6(
+                            //     fontWeight: FWT.medium,
+                            //     fontColor: isLight ? const Color(0xffB9B9B9) : Colors.white,
+                            //   ),
+                            // ),
                           ],
                         ),
-                        const Spacer(),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 15.h),
-                          child: IconWrapper(onTap: () {}, icon: 'assets/Icons/Search.svg'),
-                        ),
+                        // const Spacer(),
+                        // Padding(
+                        //   padding: EdgeInsets.only(bottom: 15.h),
+                        //   child: IconWrapper(onTap: () {}, icon: 'assets/Icons/Search.svg'),
+                        // ),
                       ],
                     ),
                   ),
                 ),
-                SliverSizedBox(height: 10.h),
+                SliverSizedBox(height: 5.h),
 
                 /// You can use the fetched dataService here or update your ViewModel accordingly.
                 /// For example, if you want to display them in a list:
@@ -163,25 +188,25 @@ class _ConsultationBookAppointmentState extends State<ConsultationBookAppointmen
                 //     childCount: dataService.length,
                 //   ),
                 // ),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final item = index < dataService.length ? dataService[index] : null;
-                      if (item == null) return const SizedBox.shrink();
+                // SliverList(
+                //   delegate: SliverChildBuilderDelegate(
+                //     (context, index) {
+                //       final item = index < dataService.length ? dataService[index] : null;
+                //       if (item == null) return const SizedBox.shrink();
 
-                      final clinicModel = ClinicVisitCardModel.fromMap(item);
+                //       final clinicModel = ClinicVisitCardModel.fromMap(item);
 
-                      return ClinicVisitCard(
-                        selected: model.checkIfSelected(clinicModel),
-                        onTap: () {
-                          model.chooseClinic(clinicModel, index);
-                        },
-                        info: clinicModel,
-                      );
-                    },
-                    childCount: dataService.length,
-                  ),
-                ),
+                //       return ClinicVisitCard(
+                //         selected: model.checkIfSelected(clinicModel),
+                //         onTap: () {
+                //           model.chooseClinic(clinicModel, index);
+                //         },
+                //         info: clinicModel,
+                //       );
+                //     },
+                //     childCount: dataService.length,
+                //   ),
+                // ),
 
 
                 SliverSizedBox(height: 115.h),
@@ -196,17 +221,22 @@ class _ConsultationBookAppointmentState extends State<ConsultationBookAppointmen
                   isArrowButton: true,
                   tittle: 'Continue',
                   onTap: () {
-                 
-                    if (model.selectedServiceId != null) {
-                      NavigationUtil.to(
-                        context,
-                        ConsultationSelectDoctor(servicesId: model.selectedServiceId!),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Please select a Service first")),
-                      );
-                    }
+                    // if (model.selectedServiceId != null) {
+                    //   // if (model.selectedTag == 'Personal') {
+                    //   //    NavigationUtil.to(
+                    //   //   context,
+                    //   //   ConsultationDoctorProfile(doctor: model.selectedServiceId),
+                    //   // );
+                    //   // }
+                    //   NavigationUtil.to(
+                    //     context,
+                    //     ConsultationSelectDoctor(servicesId: model.selectedServiceId!, tag: model.selectedTag!,),
+                    //   );
+                    // } else {
+                    //   ScaffoldMessenger.of(context).showSnackBar(
+                    //     SnackBar(content: Text("Please select a Service first")),
+                    //   );
+                    // }
                   },
                 ),
               ),
