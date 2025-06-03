@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:medix/Data/Model/Clinic/clinic_visits_card.dart';
+import 'package:medix/Data/Model/Clinic/clinic_visit_card.dart';
 import 'package:medix/Extensions/text_trimming_extension.dart';
+import 'package:medix/Presentation/Widgets/svg_icon.dart';
 import 'package:medix/Utils/utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -14,14 +15,14 @@ class ClinicVisitCard extends StatelessWidget {
   }) : super(key: key);
   final bool? selected;
   final VoidCallback onTap;
-  final ClinicVisitsCardModel info;
+  final ClinicVisitCardModel info;
   @override
   Widget build(BuildContext context) {
     var isLight = Theme.of(context).brightness == Brightness.light;
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 105.h,
+        height: 150.h,
         margin: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0),
         decoration: BoxDecoration(
             border: selected!
@@ -32,13 +33,13 @@ class ClinicVisitCard extends StatelessWidget {
         child: Row(
           children: [
             SizedBox(
-              width: 120.w,
+              width: 129.w,
               child: ClipRRect(
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(15.r),
                       bottomLeft: Radius.circular(15.r)),
                   child: Image.asset(
-                    'assets/Images/Temp/doctor_1.png',
+                    info.image,
                     fit: BoxFit.cover,
                   )),
             ),
@@ -58,7 +59,7 @@ class ClinicVisitCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2),
                       Text(
-                        ' Doctor',
+                        "${info.hospitalCount} Clinics",
                         style: FontStyleUtilities.h6(
                             fontWeight: FWT.medium,
                             fontColor: isLight
@@ -66,7 +67,7 @@ class ClinicVisitCard extends StatelessWidget {
                                 : Colors.white),
                       ),
                       SizedBox(height: 3.h),
-                      Text('100+ Patients',
+                      Text('${info.lowestCharge} - ${info.highestCharge}',
                           style: FontStyleUtilities.h6(
                                   fontWeight: FWT.medium,
                                   fontColor: ColorUtil.primaryColor)
@@ -75,26 +76,26 @@ class ClinicVisitCard extends StatelessWidget {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          // const SvgIcon('assets/Icons/Time.svg'),
+                          const SvgIcon('assets/Icons/Time.svg'),
                           SizedBox(width: 1.w),
-                          // Text(
-                          //   'Available time',
-                          //   style: FontStyleUtilities.t2(
-                          //       height: 1,
-                          //       fontWeight: FWT.regular,
-                          //       fontColor: isLight
-                          //           ? Colors.black.withOpacity(.30)
-                          //           : Colors.white),
-                          // ),
+                          Text(
+                            'Group',
+                            style: FontStyleUtilities.t2(
+                                height: 1,
+                                fontWeight: FWT.regular,
+                                fontColor: isLight
+                                    ? Colors.black.withOpacity(.30)
+                                    : Colors.white),
+                          ),
                           const Spacer(),
-                          // Text(
-                          //   "Dec ${info.time}",
-                          //   style: FontStyleUtilities.t4(
-                          //       fontWeight: FWT.regular,
-                          //       fontColor: isLight
-                          //           ? const Color(0xff454545).withOpacity(.80)
-                          //           : Colors.white.withOpacity(.70)),
-                          // ),
+                          Text(
+                            "Personal",
+                            style: FontStyleUtilities.t4(
+                                fontWeight: FWT.regular,
+                                fontColor: isLight
+                                    ? const Color(0xff454545).withOpacity(.80)
+                                    : Colors.white.withOpacity(.70)),
+                          ),
                           SizedBox(width: 5.w)
                         ],
                       )

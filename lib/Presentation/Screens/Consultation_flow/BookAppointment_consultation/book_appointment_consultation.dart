@@ -2,17 +2,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
-import 'package:medix/Data/Core/api_client.dart'; // Your ApiClient import
-import 'package:medix/Data/Model/Clinic/clinic_visit_card.dart';
-import 'package:medix/Presentation/Screens/Consultation_flow/Consulatation_doctor_profile/consulation_doctor_profile.dart';
-
-import 'package:medix/Presentation/Screens/Consultation_flow/Consultation_doctors/select_doctor_consultation.dart';
-import 'package:medix/Utils/utils.dart';
+import 'package:medix/Data/Core/api_client.dart';
+import 'package:medix/Data/Fake_data/Clinic_visit/clinic_visit.dart';
+import 'package:medix/Presentation/Screens/Clinic_flow/clinic_visit/clinic_vist.dart';
+import 'package:medix/Presentation/Screens/Flow_widgets/clinic_card.dart'; 
 import 'package:stacked/stacked.dart';
 
 import 'package:medix/Presentation/Widgets/widgets.dart';
 import '../Shared/app_bar.dart' as bar;
-import '../../Flow_widgets/clinic_card.dart';
 
 import 'package:medix/Presentation/Screens/Consultation_flow/BookAppointment_consultation/book_appointment_consultation_view_model.dart';
 
@@ -188,27 +185,18 @@ class _ConsultationBookAppointmentState extends State<ConsultationBookAppointmen
                 //     childCount: dataService.length,
                 //   ),
                 // ),
-                // SliverList(
-                //   delegate: SliverChildBuilderDelegate(
-                //     (context, index) {
-                //       final item = index < dataService.length ? dataService[index] : null;
-                //       if (item == null) return const SizedBox.shrink();
-
-                //       final clinicModel = ClinicVisitCardModel.fromMap(item);
-
-                //       return ClinicVisitCard(
-                //         selected: model.checkIfSelected(clinicModel),
-                //         onTap: () {
-                //           model.chooseClinic(clinicModel, index);
-                //         },
-                //         info: clinicModel,
-                //       );
-                //     },
-                //     childCount: dataService.length,
-                //   ),
-                // ),
-
-
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) => ClinicVisitCard(
+                      selected: model.checkIfSelected(clinics[index]),
+                      onTap: (){
+                        model.chooseClinic(clinics[index]);
+                      },
+                      info: clinics[index],
+                    ),
+                    childCount: clinics.length,
+                  )
+                ),
                 SliverSizedBox(height: 115.h),
               ],
             ),

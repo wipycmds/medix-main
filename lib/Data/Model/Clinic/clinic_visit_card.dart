@@ -5,7 +5,8 @@ class ClinicVisitCardModel {
     required this.time,
     required this.hospitalCount,
     required this.highestCharge,
-    required this.lowestCharge,
+    required this.lowestCharge, 
+    // required this.id,
 
   });
    final String image, name, time;

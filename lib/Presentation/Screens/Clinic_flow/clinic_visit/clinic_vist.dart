@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medix/Data/Fake_data/Clinic_visit/clinic_visits.dart';
-import 'package:medix/Data/Fake_data/Clinic_visit/labs.dart';
-import 'package:medix/Data/Model/Clinic/clinic_visit_card.dart';
+import 'package:medix/Data/Fake_data/Clinic_visit/clinic_visit.dart';
 import 'package:medix/Presentation/Screens/Clinic_flow/clinic_visit/clinic_view_model.dart';
 import 'package:medix/Presentation/Screens/Clinic_flow/hospital_list/hospital_list.dart';
 import 'package:medix/Utils/utils.dart';
@@ -49,24 +47,24 @@ class ClinicVisit extends StatelessWidget {
                                           ? Colors.black
                                           : Colors.white),
                                 ),
-                                Text(
-                                  'Find the service you are ',
-                                  style: FontStyleUtilities.h6(
-                                      fontWeight: FWT.medium,
-                                      fontColor: const Color(0xffB9B9B9)),
-                                ),
+                                // Text(
+                                //   'Find the service you are ',
+                                //   style: FontStyleUtilities.h6(
+                                //       fontWeight: FWT.medium,
+                                //       fontColor: const Color(0xffB9B9B9)),
+                                // ),
                               ],
                             ),
                             const Spacer(),
-                            IconWrapper(
-                                onTap: () {}, icon: 'assets/Icons/Search.svg'),
+                            // IconWrapper(
+                            //     onTap: () {}, icon: 'assets/Icons/Search.svg'),
                             SizedBox(width: 16.w),
-                            IconWrapper(
-                                onTap: () {
-                                  scaffKey.currentState!.openEndDrawer();
-                                },
-                                icon: 'assets/Icons/Filter.svg',
-                                padding: 9)
+                            // IconWrapper(
+                            //     onTap: () {
+                            //       scaffKey.currentState!.openEndDrawer();
+                            //     },
+                            //     icon: 'assets/Icons/Filter.svg',
+                            //     padding: 9)
                           ]))),
                   SliverSizedBox(height: 10.h),
                   SliverList(
@@ -78,7 +76,7 @@ class ClinicVisit extends StatelessWidget {
                                 },
                                 info: clinics[index],
                               ),
-                          childCount: labs.length)),
+                          childCount: clinics.length)),
                   SliverSizedBox(height: 85.h)
                 ],
               ),
